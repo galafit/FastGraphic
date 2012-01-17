@@ -16,16 +16,13 @@ public class FastGraphic {
         f.add(mainPanel);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        mainPanel.setLayout(new BorderLayout());
-
-        final JPanel exampleSelectionPanel = new ExampleSelectionPanel();
-        mainPanel.add(exampleSelectionPanel, BorderLayout.LINE_START);
+        mainPanel.setLayout(new GridLayout(0,1));
 
         final JPanel optionsPanel = new OptionsPanel();
-        mainPanel.add(optionsPanel,BorderLayout.LINE_END);
+        mainPanel.add(optionsPanel);
 
-        final JButton startButton = new JButton("Start");
-        mainPanel.add(startButton,BorderLayout.PAGE_END);
+        final JPanel exampleSelectionPanel = new ExampleSelectionPanel();
+        mainPanel.add(exampleSelectionPanel);
 
         f.pack();
         f.setVisible(true);
