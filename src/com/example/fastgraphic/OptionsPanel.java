@@ -8,8 +8,9 @@ import java.awt.*;
  */
 public class OptionsPanel extends JPanel {
     public OptionsPanel() {
-
-        super(new GridLayout(3, 4));
+        GridLayout gl = new GridLayout(3,4);
+        gl.setHgap(15);
+        setLayout(gl);
 
         add(new JLabel("delay: "));
         add(new JFormattedTextField(16));
