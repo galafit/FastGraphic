@@ -3,6 +3,8 @@ package com.example.fastgraphic;
 import javax.swing.*;
 import java.awt.*;
 
+//hello sasha
+
 /**
  * Panel to set parameters like fps, dimension, etc.
  */
