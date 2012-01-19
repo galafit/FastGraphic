@@ -13,6 +13,13 @@ public class OptionsDialog extends JDialog implements ActionListener {
     String toolNames[] = {"AWT", "SWING", "FullScreen", "OpenGL", "Video Player"};
     String chosenTool = toolNames[0];
 
+    private JPanel composeLabelField(String label, Component component) {
+        JPanel panel=new  JPanel();
+        panel.add(new JLabel(label));
+        panel.add(component);
+        return panel;
+        
+    }
 
     //save the name of chosen RadioButton in the var "chosenTool"
     public void actionPerformed(ActionEvent e) {
@@ -55,8 +62,8 @@ public class OptionsDialog extends JDialog implements ActionListener {
         framePanel.setBorder(BorderFactory.createTitledBorder("Frame Changing"));
         JTextField frameRate = new JTextField(String.valueOf(currentParameters.frameRate), 3);
         JTextField  frameShift= new JTextField(String.valueOf(currentParameters.frameShift), 3);
-        JPanel frameRatePanel=new LabeledFieldPanel("Frame Rate   [perSec]",frameRate);
-        JPanel frameShiftPanel=new LabeledFieldPanel("Frame Shift  [pixels]",frameShift);
+        JPanel frameRatePanel=composeLabelField("Frame Rate   [perSec]",frameRate);
+        JPanel frameShiftPanel=composeLabelField("Frame Shift  [pixels]",frameShift);
         
         framePanel.add(frameRatePanel,BorderLayout.NORTH);
         framePanel.add(frameShiftPanel,BorderLayout.CENTER);
@@ -72,10 +79,10 @@ public class OptionsDialog extends JDialog implements ActionListener {
         bgChoice.setSelectedItem(currentParameters.bgColor);
         fgChoice.setSelectedItem(currentParameters.fgColor);
         // Join Labels with the Fields
-        JPanel bgChoicePanel = new LabeledFieldPanel("BG Color", bgChoice);
-        JPanel fgChoicePanel = new LabeledFieldPanel("FG Color", fgChoice);
-        JPanel widthPanel = new LabeledFieldPanel("Width ", widthField);
-        JPanel heightPanel = new LabeledFieldPanel("Height", heightField);
+        JPanel bgChoicePanel = composeLabelField("BG Color", bgChoice);
+        JPanel fgChoicePanel = composeLabelField("FG Color", fgChoice);
+        JPanel widthPanel = composeLabelField("Width ", widthField);
+        JPanel heightPanel = composeLabelField("Height", heightField);
 
         JPanel colorPanel = new JPanel(new BorderLayout());
         colorPanel.add(fgChoicePanel, BorderLayout.NORTH);
