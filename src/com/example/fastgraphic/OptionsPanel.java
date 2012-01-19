@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 //hello sasha
+//hello gala
 
 /**
  * Panel to set parameters like fps, dimension, etc.
