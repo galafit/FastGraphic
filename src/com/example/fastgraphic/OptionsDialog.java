@@ -10,8 +10,24 @@ import java.awt.event.ActionListener;
 public class OptionsDialog extends JDialog implements ActionListener {
 
     Parameters currentParameters = new Parameters();
-    String toolNames[] = {"AWT", "SWING", "FullScreen", "OpenGL", "Video Player"};
+    String toolNames[] = {"AWT", "SWING", "FullScreen", "OpenGL", "Video Player"};   //todo: replace with enum
     String chosenTool = toolNames[0];
+
+    private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
+    JCheckBox lineCheckBox = new JCheckBox("Line");
+    JCheckBox bgCheckBox = new JCheckBox("BG change");
+    JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
+
+    JTextField frameRate = new JTextField(String.valueOf(currentParameters.frameRate), 3);
+    JTextField  frameShift= new JTextField(String.valueOf(currentParameters.frameShift), 3);
+
+    JTextField widthField = new JTextField(String.valueOf(currentParameters.width),3);
+    JTextField heightField = new JTextField(String.valueOf(currentParameters.height),3);
+    JComboBox bgChoice = new JComboBox(Parameters.availableColors);
+    JComboBox fgChoice = new JComboBox(Parameters.availableColors);
+    String modes[] = {"Normal", "Double Buffering", "GraphCard Double Buffering"};  //todo: replace with enum
+    JComboBox modeChoice = new JComboBox(modes);
+
 
     private JPanel composeLabelField(String label, Component component) {
         JPanel panel=new  JPanel();
@@ -46,11 +62,6 @@ public class OptionsDialog extends JDialog implements ActionListener {
         // Panel with CheckBox Buttons  to choose graphics that will be painted
         JPanel graphPanel = new JPanel(new GridLayout(0, 2, 20, 5));
         graphPanel.setBorder(BorderFactory.createTitledBorder("Graphics"));
-        JCheckBox sinusCheckBox = new JCheckBox("Sinus", true);
-        JCheckBox lineCheckBox = new JCheckBox("Line");
-        JCheckBox bgCheckBox = new JCheckBox("BG change");
-        JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
-
         graphPanel.add(sinusCheckBox);
         graphPanel.add(lineCheckBox);
         graphPanel.add(bgCheckBox);
@@ -60,11 +71,8 @@ public class OptionsDialog extends JDialog implements ActionListener {
         // Panel describing Frames Changing
         JPanel framePanel = new JPanel(new BorderLayout());
         framePanel.setBorder(BorderFactory.createTitledBorder("Frame Changing"));
-        JTextField frameRate = new JTextField(String.valueOf(currentParameters.frameRate), 3);
-        JTextField  frameShift= new JTextField(String.valueOf(currentParameters.frameShift), 3);
-        JPanel frameRatePanel=composeLabelField("Frame Rate   [perSec]",frameRate);
+        JPanel frameRatePanel=composeLabelField("Frame Rate   [perSec]", frameRate);
         JPanel frameShiftPanel=composeLabelField("Frame Shift  [pixels]",frameShift);
-        
         framePanel.add(frameRatePanel,BorderLayout.NORTH);
         framePanel.add(frameShiftPanel,BorderLayout.CENTER);
 
@@ -72,10 +80,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
         // Panel with Painting Options
         JPanel optionsPanel = new JPanel(new FlowLayout());
         optionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
-        JTextField widthField = new JTextField(String.valueOf(currentParameters.width),3);
-        JTextField heightField = new JTextField(String.valueOf(currentParameters.height),3);
-        JComboBox bgChoice = new JComboBox(Parameters.availableColors);
-        JComboBox fgChoice = new JComboBox(Parameters.availableColors);
+
         bgChoice.setSelectedItem(currentParameters.bgColor);
         fgChoice.setSelectedItem(currentParameters.fgColor);
         // Join Labels with the Fields
@@ -99,8 +104,6 @@ public class OptionsDialog extends JDialog implements ActionListener {
          // For the Tools  "OpenGL" and "Video Player" it will be disabled
         JPanel modePanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,20));
         modePanel.setBorder(BorderFactory.createTitledBorder("Paint Mode"));
-        String modes[] = {"Normal", "Double Buffering", "GraphCard Double Buffering"};
-        JComboBox modeChoice = new JComboBox(modes);
         modePanel.add(modeChoice);
 
         JPanel containPanel = new JPanel();
