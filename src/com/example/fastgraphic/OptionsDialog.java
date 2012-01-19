@@ -18,11 +18,11 @@ public class OptionsDialog extends JDialog implements ActionListener {
     JCheckBox bgCheckBox = new JCheckBox("BG change");
     JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
-    JTextField frameRate = new JTextField(String.valueOf(currentParameters.frameRate), 3);
-    JTextField  frameShift= new JTextField(String.valueOf(currentParameters.frameShift), 3);
+    JFormattedTextField frameRate = new JFormattedTextField(currentParameters.frameRate);
+    JFormattedTextField  frameShift= new JFormattedTextField(currentParameters.frameShift);
 
-    JTextField widthField = new JTextField(String.valueOf(currentParameters.width),3);
-    JTextField heightField = new JTextField(String.valueOf(currentParameters.height),3);
+   JFormattedTextField widthField = new JFormattedTextField(currentParameters.width);
+    JFormattedTextField heightField = new JFormattedTextField(currentParameters.height);
     JComboBox bgChoice = new JComboBox(Parameters.availableColors);
     JComboBox fgChoice = new JComboBox(Parameters.availableColors);
     String modes[] = {"Normal", "Double Buffering", "GraphCard Double Buffering"};  //todo: replace with enum
