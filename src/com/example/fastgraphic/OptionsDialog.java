@@ -11,7 +11,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
 
     Parameters currentParameters = new Parameters();
     String toolNames[] = {"AWT", "SWING", "FullScreen", "OpenGL", "Video Player"};   //todo: replace with enum
-    String chosenTool = toolNames[0];
+    GTools chosenTool;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
@@ -39,7 +39,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
 
     //save the name of chosen RadioButton in the var "chosenTool"
     public void actionPerformed(ActionEvent e) {
-        chosenTool = e.getActionCommand();
+       /* chosenTool = e.;*///todo do smth
     }
 
     public OptionsDialog() {
@@ -48,12 +48,9 @@ public class OptionsDialog extends JDialog implements ActionListener {
         // Panel with Radio Buttons to chose Tool
         JPanel toolPanel = new JPanel();
         ButtonGroup toolChoice = new ButtonGroup();
-        for (int i = 0; i < toolNames.length; i++) {
-            JRadioButton radio = new JRadioButton(toolNames[i]);
-            if (i == 0) {
-                radio.setSelected(true);
-            }
-            radio.setActionCommand(toolNames[i]);
+        for (GTools gTool : GTools.values()) {
+            JRadioButton radio = new JRadioButton(gTool.getName());
+            radio.setActionCommand(gTool.toString());
             radio.addActionListener(this);
             toolPanel.add(radio);
             toolChoice.add(radio);
