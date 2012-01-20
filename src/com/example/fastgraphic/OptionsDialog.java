@@ -3,12 +3,14 @@ package com.example.fastgraphic;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 
 public class OptionsDialog extends JDialog {
 
-    Parameters parameters = new Parameters();
+    final Parameters parameters = new Parameters();
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
@@ -100,6 +102,11 @@ public class OptionsDialog extends JDialog {
         containPanel.add(modePanel);
 
         JButton okButton = new JButton("OK");
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controlsToParams(parameters);
+            }
+        });
         JPanel okPanel = new JPanel();
         okPanel.add(okButton);
 
@@ -113,7 +120,7 @@ public class OptionsDialog extends JDialog {
     }
 
     public void paramsToControls(Parameters params) {
-        sinusCheckBox.setSelected(params.isUseSinusPinter());
+        sinusCheckBox.setSelected(params.isUseSinusPainter());
         lineCheckBox.setSelected(params.isUseLinePainter());
         bgCheckBox.setSelected(params.isUseBgFlipPainter());
         slowCheckBox.setSelected(params.isUseSlowPainter());
@@ -135,7 +142,27 @@ public class OptionsDialog extends JDialog {
     }
 
     public void controlsToParams(Parameters params) {
-        throw new UnsupportedOperationException("todo");
+        params.setUseSinusPainter(sinusCheckBox.isSelected());
+        params.setUseLinePainter(lineCheckBox.isSelected());
+        params.setUseBgFlipPainter(bgCheckBox.isSelected());
+        params.setUseSlowPainter(slowCheckBox.isSelected());
+
+        params.setFrameRate((Integer)frameRate.getValue());
+        params.setFrameShift((Float)frameShift.getValue());
+        params.setWidth((Integer)widthField.getValue());
+        params.setHeight((Integer)heightField.getValue());
+        params.setBgColor((NamedColor)bgChoice.getSelectedItem());
+        params.setFgColor((NamedColor)fgChoice.getSelectedItem());
+        params.setBufferingType((BufferingType)bufferingChoice.getSelectedItem());
+
+        Enumeration<AbstractButton> buttonEnumeration = toolButtonGroup.getElements();
+        while (buttonEnumeration.hasMoreElements()) {
+            AbstractButton button =  buttonEnumeration.nextElement();
+            if(button.isSelected()){
+                params.setGTool(GTool.valueOf(button.getActionCommand()));
+            }
+        }
+
     }
 
     public static void main(String[] args) {

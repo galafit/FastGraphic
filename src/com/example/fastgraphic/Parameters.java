@@ -14,7 +14,7 @@ public class Parameters {
     private GTool gTool = GTool.OPEN_GL;
     private BufferingType bufferingType = BufferingType.DIRECT;
     private boolean useLinePainter;
-    private boolean useSinusPinter;
+    private boolean useSinusPainter = true;
     private boolean useBgFlipPainter;
     private boolean useSlowPainter;
 
@@ -91,12 +91,12 @@ public class Parameters {
         this.useLinePainter = useLinePainter;
     }
 
-    public boolean isUseSinusPinter() {
-        return useSinusPinter;
+    public boolean isUseSinusPainter() {
+        return useSinusPainter;
     }
 
-    public void setUseSinusPinter(boolean useSinusPinter) {
-        this.useSinusPinter = useSinusPinter;
+    public void setUseSinusPainter(boolean useSinusPainter) {
+        this.useSinusPainter = useSinusPainter;
     }
 
     public boolean isUseBgFlipPainter() {
