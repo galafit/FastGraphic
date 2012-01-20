@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 public class OptionsDialog extends JDialog implements ActionListener {
 
     Parameters currentParameters = new Parameters();
-    String toolNames[] = {"AWT", "SWING", "FullScreen", "OpenGL", "Video Player"};   //todo: replace with enum
     GTools chosenTool;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
@@ -25,8 +24,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
     JFormattedTextField heightField = new JFormattedTextField(currentParameters.height);
     JComboBox bgChoice = new JComboBox(Parameters.availableColors);
     JComboBox fgChoice = new JComboBox(Parameters.availableColors);
-    String modes[] = {"Normal", "Double Buffering", "GraphCard Double Buffering"};  //todo: replace with enum
-    JComboBox modeChoice = new JComboBox(modes);
+    JComboBox bufferingChoice = new JComboBox(BufferingType.values());
 
 
     private JPanel composeLabelField(String label, Component component) {
@@ -101,7 +99,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
          // For the Tools  "OpenGL" and "Video Player" it will be disabled
         JPanel modePanel = new JPanel(new FlowLayout(FlowLayout.CENTER,5,20));
         modePanel.setBorder(BorderFactory.createTitledBorder("Paint Mode"));
-        modePanel.add(modeChoice);
+        modePanel.add(bufferingChoice);
 
         JPanel containPanel = new JPanel();
         containPanel.setLayout(new GridLayout(2, 2, 20, 5));
