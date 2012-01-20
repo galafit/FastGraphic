@@ -7,6 +7,7 @@ import java.awt.*;
 
 import static org.junit.Assert.*;
 
+
 public class OptionsWindowTest {
 
     @Test

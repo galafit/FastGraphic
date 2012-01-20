@@ -108,19 +108,28 @@ public class OptionsWindow extends JFrame {
         containPanel.add(optionsPanel);
         containPanel.add(modePanel);
 
-        JButton okButton = new JButton("OK");
-        okButton.addActionListener(new ActionListener() {
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsToParams(parameters);
             }
         });
-        JPanel okPanel = new JPanel();
-        okPanel.add(okButton);
+        
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+                
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(exitButton);
+        buttonPanel.add(startButton);
 
 
         add(toolPanel, BorderLayout.NORTH);
         add(containPanel, BorderLayout.CENTER);
-        add(okPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH);
         paramsToControls(parameters);
         pack();
         setVisible(true);
