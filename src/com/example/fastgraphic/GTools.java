@@ -10,14 +10,14 @@ public enum GTools {
     OPEN_GL("OpenGL"),
     VLCJ("Player (VLCJ)");
 
-    private String name;
+    private String label;
 
-    GTools(String name) {
-        this.name = name;
+    GTools(String label) {
+        this.label = label;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
 }

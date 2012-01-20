@@ -39,7 +39,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
 
     //save the name of chosen RadioButton in the var "chosenTool"
     public void actionPerformed(ActionEvent e) {
-       /* chosenTool = e.;*///todo do smth
+       chosenTool = GTools.valueOf(e.getActionCommand());
     }
 
     public OptionsDialog() {
@@ -49,8 +49,8 @@ public class OptionsDialog extends JDialog implements ActionListener {
         JPanel toolPanel = new JPanel();
         ButtonGroup toolChoice = new ButtonGroup();
         for (GTools gTool : GTools.values()) {
-            JRadioButton radio = new JRadioButton(gTool.getName());
-            radio.setActionCommand(gTool.toString());
+            JRadioButton radio = new JRadioButton(gTool.getLabel());
+            radio.setActionCommand(gTool.name());
             radio.addActionListener(this);
             toolPanel.add(radio);
             toolChoice.add(radio);
@@ -129,4 +129,5 @@ public class OptionsDialog extends JDialog implements ActionListener {
     }
 
 }
+
 
