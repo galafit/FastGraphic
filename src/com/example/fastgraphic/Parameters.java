@@ -8,11 +8,16 @@ public class Parameters {
     private int width = 640;
     private int height = 480;
     private int frameRate = 60;
-    private float frameShift = 1;
+    private float frameShift = 0.5f;
     private NamedColor bgColor = availableColors[0];
     private NamedColor fgColor = availableColors[1];
-    private GTool gTool = GTool.AWT;
+    private GTool gTool = GTool.OPEN_GL;
     private BufferingType bufferingType = BufferingType.DIRECT;
+    private boolean useLinePainter;
+    private boolean useSinusPinter;
+    private boolean useBgFlipPainter;
+    private boolean useSlowPainter;
+
 
     public int getWidth() {
         return width;
@@ -76,5 +81,37 @@ public class Parameters {
 
     public void setBufferingType(BufferingType bufferingType) {
         this.bufferingType = bufferingType;
+    }
+
+    public boolean isUseLinePainter() {
+        return useLinePainter;
+    }
+
+    public void setUseLinePainter(boolean useLinePainter) {
+        this.useLinePainter = useLinePainter;
+    }
+
+    public boolean isUseSinusPinter() {
+        return useSinusPinter;
+    }
+
+    public void setUseSinusPinter(boolean useSinusPinter) {
+        this.useSinusPinter = useSinusPinter;
+    }
+
+    public boolean isUseBgFlipPainter() {
+        return useBgFlipPainter;
+    }
+
+    public void setUseBgFlipPainter(boolean useBgFlipPainter) {
+        this.useBgFlipPainter = useBgFlipPainter;
+    }
+
+    public boolean isUseSlowPainter() {
+        return useSlowPainter;
+    }
+
+    public void setUseSlowPainter(boolean useSlowPainter) {
+        this.useSlowPainter = useSlowPainter;
     }
 }
