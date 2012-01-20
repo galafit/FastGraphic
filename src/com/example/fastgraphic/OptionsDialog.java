@@ -17,11 +17,11 @@ public class OptionsDialog extends JDialog implements ActionListener {
     JCheckBox bgCheckBox = new JCheckBox("BG change");
     JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
-    JFormattedTextField frameRate = new JFormattedTextField(currentParameters.frameRate);
-    JFormattedTextField  frameShift= new JFormattedTextField(currentParameters.frameShift);
+    JFormattedTextField frameRate = new JFormattedTextField(currentParameters.getFrameRate());
+    JFormattedTextField  frameShift= new JFormattedTextField(currentParameters.getFrameShift());
 
-   JFormattedTextField widthField = new JFormattedTextField(currentParameters.width);
-    JFormattedTextField heightField = new JFormattedTextField(currentParameters.height);
+   JFormattedTextField widthField = new JFormattedTextField(currentParameters.getWidth());
+    JFormattedTextField heightField = new JFormattedTextField(currentParameters.getHeight());
     JComboBox bgChoice = new JComboBox(Parameters.availableColors);
     JComboBox fgChoice = new JComboBox(Parameters.availableColors);
     JComboBox bufferingChoice = new JComboBox(BufferingType.values());
@@ -76,8 +76,8 @@ public class OptionsDialog extends JDialog implements ActionListener {
         JPanel optionsPanel = new JPanel(new FlowLayout());
         optionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
 
-        bgChoice.setSelectedItem(currentParameters.bgColor);
-        fgChoice.setSelectedItem(currentParameters.fgColor);
+        bgChoice.setSelectedItem(currentParameters.getBgColor());
+        fgChoice.setSelectedItem(currentParameters.getFgColor());
         // Join Labels with the Fields
         JPanel bgChoicePanel = composeLabelField("BG Color", bgChoice);
         JPanel fgChoicePanel = composeLabelField("FG Color", fgChoice);
