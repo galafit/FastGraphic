@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class OptionsDialog extends JDialog implements ActionListener {
 
     Parameters currentParameters = new Parameters();
-    GTools chosenTool;
+    GTool chosenTool;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
@@ -37,7 +37,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
 
     //save the name of chosen RadioButton in the var "chosenTool"
     public void actionPerformed(ActionEvent e) {
-       chosenTool = GTools.valueOf(e.getActionCommand());
+       chosenTool = GTool.valueOf(e.getActionCommand());
     }
 
     public OptionsDialog() {
@@ -46,7 +46,7 @@ public class OptionsDialog extends JDialog implements ActionListener {
         // Panel with Radio Buttons to chose Tool
         JPanel toolPanel = new JPanel();
         ButtonGroup toolChoice = new ButtonGroup();
-        for (GTools gTool : GTools.values()) {
+        for (GTool gTool : GTool.values()) {
             JRadioButton radio = new JRadioButton(gTool.getLabel());
             radio.setActionCommand(gTool.name());
             radio.addActionListener(this);

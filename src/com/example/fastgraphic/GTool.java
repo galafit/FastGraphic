@@ -3,7 +3,7 @@ package com.example.fastgraphic;
 /**
  *  enum for available graphic tools
  */
-public enum GTools {
+public enum GTool {
     AWT("AWT"),
     SWING("SWING"),
     FULL_SCREEN("Full Screen"),
@@ -12,7 +12,7 @@ public enum GTools {
 
     private String label;
 
-    GTools(String label) {
+    GTool(String label) {
         this.label = label;
     }
 
