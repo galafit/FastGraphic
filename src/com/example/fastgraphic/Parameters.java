@@ -3,15 +3,13 @@ package com.example.fastgraphic;
 
 public class Parameters {
 
-    public static final NamedColor availableColors[] = {NamedColor.black, NamedColor.green, NamedColor.red, NamedColor.gray};
-
     private int width = 640;
     private int height = 480;
     private int frameRate = 60;
     private float frameShift = 0.5f;
-    private NamedColor bgColor = availableColors[0];
-    private NamedColor fgColor = availableColors[1];
-    private GTool gTool = GTool.OPEN_GL;
+    private AvailableColors bgColor = AvailableColors.BLACK;
+    private AvailableColors fgColor = AvailableColors.GREEN;
+    private GTool gTool = GTool.AWT;
     private BufferingType bufferingType = BufferingType.DIRECT;
     private boolean useLinePainter;
     private boolean useSinusPainter = true;
@@ -51,19 +49,19 @@ public class Parameters {
         this.frameShift = frameShift;
     }
 
-    public NamedColor getBgColor() {
+    public AvailableColors getBgColor() {
         return bgColor;
     }
 
-    public void setBgColor(NamedColor bgColor) {
+    public void setBgColor(AvailableColors bgColor) {
         this.bgColor = bgColor;
     }
 
-    public NamedColor getFgColor() {
+    public AvailableColors getFgColor() {
         return fgColor;
     }
 
-    public void setFgColor(NamedColor fgColor) {
+    public void setFgColor(AvailableColors fgColor) {
         this.fgColor = fgColor;
     }
 

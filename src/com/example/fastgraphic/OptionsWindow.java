@@ -5,25 +5,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Enumeration;
 
 
-public class OptionsDialog extends JDialog {
+public class OptionsWindow extends JFrame {
 
-    final Parameters parameters = new Parameters();
+    final Parameters parameters;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
     JCheckBox bgCheckBox = new JCheckBox("BG change");
     JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
-    JFormattedTextField frameRate = new JFormattedTextField(parameters.getFrameRate());
-    JFormattedTextField frameShift = new JFormattedTextField(parameters.getFrameShift());
+    JFormattedTextField frameRate = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    JFormattedTextField frameShift = new JFormattedTextField(new DecimalFormat("0.0"));
 
-    JFormattedTextField widthField = new JFormattedTextField(parameters.getWidth());
-    JFormattedTextField heightField = new JFormattedTextField(parameters.getHeight());
-    JComboBox bgChoice = new JComboBox(Parameters.availableColors);
-    JComboBox fgChoice = new JComboBox(Parameters.availableColors);
+    JFormattedTextField widthField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    JFormattedTextField heightField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    JComboBox bgChoice = new JComboBox(AvailableColors.values());
+    JComboBox fgChoice = new JComboBox(AvailableColors.values());
     JComboBox bufferingChoice = new JComboBox(BufferingType.values());
     private ButtonGroup toolButtonGroup;
 
@@ -34,9 +36,14 @@ public class OptionsDialog extends JDialog {
         return panel;
     }
 
-    public OptionsDialog() {
+    public OptionsWindow(Parameters params) {
+        this.parameters = params;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        widthField.setColumns(3);
+        heightField.setColumns(3);
+        frameRate.setColumns(2);
+        frameShift.setColumns(2);
         // Panel with Radio Buttons to chose Tool
         JPanel toolPanel = new JPanel();
         toolButtonGroup = new ButtonGroup();
@@ -148,11 +155,11 @@ public class OptionsDialog extends JDialog {
         params.setUseSlowPainter(slowCheckBox.isSelected());
 
         params.setFrameRate((Integer)frameRate.getValue());
-        params.setFrameShift((Float)frameShift.getValue());
-        params.setWidth((Integer)widthField.getValue());
-        params.setHeight((Integer)heightField.getValue());
-        params.setBgColor((NamedColor)bgChoice.getSelectedItem());
-        params.setFgColor((NamedColor)fgChoice.getSelectedItem());
+        params.setFrameShift((Float) frameShift.getValue());
+        params.setWidth((Integer) widthField.getValue());
+        params.setHeight((Integer) heightField.getValue());
+        params.setBgColor((AvailableColors)bgChoice.getSelectedItem());
+        params.setFgColor((AvailableColors)fgChoice.getSelectedItem());
         params.setBufferingType((BufferingType)bufferingChoice.getSelectedItem());
 
         Enumeration<AbstractButton> buttonEnumeration = toolButtonGroup.getElements();
@@ -162,11 +169,10 @@ public class OptionsDialog extends JDialog {
                 params.setGTool(GTool.valueOf(button.getActionCommand()));
             }
         }
-
     }
 
     public static void main(String[] args) {
-        new OptionsDialog();
+        new OptionsWindow(new Parameters());
     }
 
 }
