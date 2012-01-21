@@ -38,7 +38,7 @@ public class OptionsWindow extends JFrame {
 
     public OptionsWindow(Parameters parameters) {
         params = parameters;
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         widthField.setColumns(3);
         heightField.setColumns(3);
