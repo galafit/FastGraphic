@@ -6,7 +6,7 @@ package com.example.fastgraphic;
 public class GToolFactory {
 
     public static  GTool getGTool(Parameters param){
-      if(param.getGTool().name().equals("AWT") )  {
+      if(param.getGTool()==GToolName.AWT )  {
           return new AWTGTool(param);
       }
       throw new UnsupportedOperationException("todo ");

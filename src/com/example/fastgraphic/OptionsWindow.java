@@ -12,18 +12,18 @@ import java.util.Enumeration;
 
 public class OptionsWindow extends JFrame {
 
-    final Parameters parameters;
+    final Parameters params;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
     JCheckBox bgCheckBox = new JCheckBox("BG change");
     JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
-    JFormattedTextField frameRate = new JFormattedTextField(NumberFormat.getIntegerInstance());
-    JFormattedTextField frameShift = new JFormattedTextField(new DecimalFormat("0.0"));
+    JFormattedTextField frameRate = new JFormattedTextField(1000);
+    JFormattedTextField frameShift = new JFormattedTextField(0.1f);
 
-    JFormattedTextField widthField = new JFormattedTextField(NumberFormat.getIntegerInstance());
-    JFormattedTextField heightField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    JFormattedTextField widthField = new JFormattedTextField(1000);
+    JFormattedTextField heightField = new JFormattedTextField(1000);
     JComboBox bgChoice = new JComboBox(AvailableColors.values());
     JComboBox fgChoice = new JComboBox(AvailableColors.values());
     JComboBox bufferingChoice = new JComboBox(BufferingType.values());
@@ -36,8 +36,8 @@ public class OptionsWindow extends JFrame {
         return panel;
     }
 
-    public OptionsWindow(Parameters params) {
-        this.parameters = params;
+    public OptionsWindow(Parameters parameters) {
+        params = parameters;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         widthField.setColumns(3);
@@ -76,8 +76,8 @@ public class OptionsWindow extends JFrame {
         JPanel optionsPanel = new JPanel(new FlowLayout());
         optionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
 
-        bgChoice.setSelectedItem(parameters.getBgColor());
-        fgChoice.setSelectedItem(parameters.getFgColor());
+        bgChoice.setSelectedItem(params.getBgColor());
+        fgChoice.setSelectedItem(params.getFgColor());
         // Join Labels with the Fields
         JPanel bgChoicePanel = composeLabelField("BG Color", bgChoice);
         JPanel fgChoicePanel = composeLabelField("FG Color", fgChoice);
@@ -111,8 +111,8 @@ public class OptionsWindow extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                controlsToParams(parameters);
-                GToolFactory.getGTool(parameters).startAnimation();
+                controlsToParams(params);
+                GToolFactory.getGTool(params).startAnimation();
             }
         });
         
@@ -131,7 +131,7 @@ public class OptionsWindow extends JFrame {
         add(toolPanel, BorderLayout.NORTH);
         add(containPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        paramsToControls(parameters);
+        paramsToControls(params);
         pack();
         setVisible(true);
     }
