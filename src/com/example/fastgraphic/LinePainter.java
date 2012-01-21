@@ -7,17 +7,17 @@ import java.awt.*;
  */
 
 public class LinePainter implements Painter {
-    Parameters param;
+    float shift;
     float totalShift;
 
-    public LinePainter(Parameters param) {
-        this.param = param;
+    public LinePainter(float shift) {
+        this.shift = shift;
     }
 
     public void paint(Graphics g) {
         int g_height = g.getClip().getBounds().height;
         int g_width = g.getClip().getBounds().width;
-        totalShift += param.getFrameShift();
+        totalShift += shift;
         int intTotalShift = (int) totalShift;
         if (intTotalShift > g_width) {
             totalShift = 0;
