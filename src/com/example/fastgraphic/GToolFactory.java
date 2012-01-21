@@ -5,6 +5,11 @@ package com.example.fastgraphic;
  */
 public class GToolFactory {
 
-  //  public static
+    public static  GTool getGTool(Parameters param){
+      if(param.getGTool().name().equals("AWT") )  {
+          return new AWTGTool(param);
+      }
+      throw new UnsupportedOperationException("todo ");
+    }
 
 }

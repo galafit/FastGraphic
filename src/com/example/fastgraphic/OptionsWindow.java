@@ -112,6 +112,7 @@ public class OptionsWindow extends JFrame {
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsToParams(parameters);
+                GToolFactory.getGTool(parameters).startAnimation();
             }
         });
         
