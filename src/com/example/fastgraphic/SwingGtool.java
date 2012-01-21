@@ -3,7 +3,7 @@ package com.example.fastgraphic;
 import javax.swing.*;
 import java.awt.*;
 
-public class SwingGTool extends AbstractGTool {
+public class SwingGtool extends AbstractGtool {
 
     @Override
     protected Frame getFrame() {
@@ -15,7 +15,7 @@ public class SwingGTool extends AbstractGTool {
         return new SwingPaintingArea();
     }
 
-    public SwingGTool(Parameters params) {
+    public SwingGtool(Parameters params) {
         super(params);
         ((JPanel) paintingArea).setOpaque(true);
     }

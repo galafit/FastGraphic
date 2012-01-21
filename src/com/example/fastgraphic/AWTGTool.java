@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Class to display animation using AWT
  */
-public class AWTGTool extends AbstractGTool {
+public class AWTGTool extends AbstractGtool {
 
     @Override
     protected PaintingArea getPaintingArea() {

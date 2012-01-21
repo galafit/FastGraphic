@@ -1,37 +1,35 @@
 package com.example.fastgraphic;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.Graphics;
 
 /**
  * Paint all selected graphics (sinus, line, etc)  together
  */
 public class CompositePainter {
     private Parameters params;
-    LinePainter linePainter;
-    SinusPainter sinusPainter;
-    BGFlipPainter bgFlipPainter;
-    SlowPainter slowPainter;
+    private List<Painter> activePainters = new ArrayList<Painter>();
 
     public CompositePainter(Parameters params) {
         this.params = params;
-        linePainter = new LinePainter(params.getFrameShift());
-        sinusPainter = new SinusPainter(params.getFrameShift());
-        bgFlipPainter = new BGFlipPainter();
-        slowPainter = new SlowPainter();
+        if (params.isUseBgFlipPainter()) {
+           activePainters.add(new BGFlipPainter());
+        }
+        if (params.isUseLinePainter()) {
+             activePainters.add(new LinePainter(params.getFrameShift()));
+        }
+        if (params.isUseSinusPainter()) {
+             activePainters.add(new SinusPainter(params.getFrameShift()));
+        }
+        if (params.isUseSlowPainter()) {
+             activePainters.add(new SlowPainter());
+        }
     }
 
     public void paint(Graphics g){
-        if (params.isUseBgFlipPainter()) {
-            bgFlipPainter.paint(g);
-        }
-        if (params.isUseLinePainter()) {
-            linePainter.paint(g);
-        }
-        if (params.isUseSinusPainter()) {
-            sinusPainter.paint(g);
-        }
-        if (params.isUseSlowPainter()) {
-            slowPainter.paint(g);
+        for (Painter activePainter : activePainters) {
+             activePainter.paint(g);
         }
 
     }

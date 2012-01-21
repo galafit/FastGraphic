@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGTool {
+public abstract class AbstractGtool {
     protected Parameters params;
     protected final PaintingArea paintingArea = getPaintingArea();
     protected Frame frame = getFrame();
@@ -24,7 +24,7 @@ public abstract class AbstractGTool {
 
     protected Timer changeFrameTimer;
 
-    public AbstractGTool(Parameters params) {
+    public AbstractGtool(Parameters params) {
         this.params = params;
         painter = new CompositePainter(params);
         frame.setTitle(params.getGTool().getLabel());
