@@ -24,9 +24,7 @@ public class SwingGTool extends AbstractGTool {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            for (Painter painter : painters) {
-                painter.paint(g);
-            }
+            painter.paint(g);
         }
     }
 }

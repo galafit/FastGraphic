@@ -26,9 +26,7 @@ public class AWTGTool extends AbstractGTool {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
-            for (Painter painter : painters) {
-                painter.paint(g);
-            }
+            painter.paint(g);
         }
     }
 }

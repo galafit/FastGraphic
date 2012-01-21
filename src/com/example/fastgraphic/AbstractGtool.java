@@ -16,7 +16,7 @@ public abstract class AbstractGTool {
     protected Parameters params;
     protected final PaintingArea paintingArea = getPaintingArea();
     protected Frame frame = getFrame();
-    protected List<Painter> painters = new ArrayList<Painter>();
+    protected CompositePainter painter;
 
     protected abstract Frame getFrame();
 
@@ -26,6 +26,7 @@ public abstract class AbstractGTool {
 
     public AbstractGTool(Parameters params) {
         this.params = params;
+        painter = new CompositePainter(params);
         frame.setTitle(params.getGTool().getLabel());
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -36,27 +37,9 @@ public abstract class AbstractGTool {
         paintingArea.setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
         paintingArea.setBackground(params.getBgColor().getColor());
         paintingArea.setForeground(params.getFgColor().getColor());
-        setPainters();
         frame.add((Component) paintingArea);
         frame.pack();
         frame.setVisible(true);
-    }
-
-
-    protected void setPainters() {
-        if (params.isUseBgFlipPainter()) {
-            painters.add(new BGFlipPainter());
-        }
-        if (params.isUseLinePainter()) {
-            painters.add(new LinePainter(params.getFrameShift()));
-        }
-        if (params.isUseSinusPainter()) {
-            painters.add(new SinusPainter(params.getFrameShift()));
-        }
-        if (params.isUseSlowPainter()) {
-            painters.add(new SlowPainter());
-        }
-
     }
 
     public void startAnimation() {
