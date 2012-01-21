@@ -9,7 +9,7 @@ public class Parameters {
     private float frameShift = 0.5f;
     private AvailableColors bgColor = AvailableColors.BLACK;
     private AvailableColors fgColor = AvailableColors.GREEN;
-    private GTool gTool = GTool.AWT;
+    private GToolName gToolName = GToolName.AWT;
     private BufferingType bufferingType = BufferingType.DIRECT;
     private boolean useLinePainter;
     private boolean useSinusPainter = true;
@@ -65,12 +65,12 @@ public class Parameters {
         this.fgColor = fgColor;
     }
 
-    public GTool getGTool() {
-        return gTool;
+    public GToolName getGTool() {
+        return gToolName;
     }
 
-    public void setGTool(GTool gTool) {
-        this.gTool = gTool;
+    public void setGTool(GToolName gToolName) {
+        this.gToolName = gToolName;
     }
 
     public BufferingType getBufferingType() {

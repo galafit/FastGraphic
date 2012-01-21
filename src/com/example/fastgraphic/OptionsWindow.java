@@ -47,9 +47,9 @@ public class OptionsWindow extends JFrame {
         // Panel with Radio Buttons to chose Tool
         JPanel toolPanel = new JPanel();
         toolButtonGroup = new ButtonGroup();
-        for (GTool gTool : GTool.values()) {
-            JRadioButton radio = new JRadioButton(gTool.getLabel());
-            radio.setActionCommand(gTool.name());
+        for (GToolName gToolName : GToolName.values()) {
+            JRadioButton radio = new JRadioButton(gToolName.getLabel());
+            radio.setActionCommand(gToolName.name());
             toolPanel.add(radio);
             toolButtonGroup.add(radio);
         }
@@ -175,7 +175,7 @@ public class OptionsWindow extends JFrame {
         while (buttonEnumeration.hasMoreElements()) {
             AbstractButton button =  buttonEnumeration.nextElement();
             if(button.isSelected()){
-                params.setGTool(GTool.valueOf(button.getActionCommand()));
+                params.setGTool(GToolName.valueOf(button.getActionCommand()));
             }
         }
     }
