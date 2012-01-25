@@ -17,16 +17,17 @@ public class SinusPainter implements Painter {
     public void paint(Graphics g) {
         int width = g.getClipBounds().width;
         int height = g.getClipBounds().height;
-        int prevPixelX = 0, prevPixelY = width / 2;
+        Point previousPoint = new Point(0, height / 2);
         for (int i = 0; i < width; i++) {
             double x = (totalFrameShift +i) * 2 * Math.PI / width;
             double y = Math.sin(x);
-
+            Point currentPoint = new Point(i, (int) Math.round(height * (1 - y) / 2));
             int pixelY = (int) Math.round(height * (1 - y) / 2);
-            g.drawLine(prevPixelX, prevPixelY, i, pixelY);
-            prevPixelX = i;
-            prevPixelY = pixelY;
+            g.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
+            previousPoint.x = currentPoint.x;
+            previousPoint.y = currentPoint.y;
         }
+        //drawing X-axis  in the middle of the painting area
         g.drawLine(0, height / 2, width, height / 2);
         totalFrameShift +=frameShift;
     }
