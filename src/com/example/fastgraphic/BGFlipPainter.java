@@ -3,7 +3,7 @@ package com.example.fastgraphic;
 import java.awt.*;
 
 /**
- *
+ *   Change BG Color for each frame
  */
 public class BGFlipPainter implements Painter {
 
