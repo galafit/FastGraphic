@@ -22,7 +22,6 @@ public class SinusPainter implements Painter {
             double x = (totalFrameShift +i) * 2 * Math.PI / width;
             double y = Math.sin(x);
             Point currentPoint = new Point(i, (int) Math.round(height * (1 - y) / 2));
-            int pixelY = (int) Math.round(height * (1 - y) / 2);
             g.drawLine(previousPoint.x, previousPoint.y, currentPoint.x, currentPoint.y);
             previousPoint.x = currentPoint.x;
             previousPoint.y = currentPoint.y;
