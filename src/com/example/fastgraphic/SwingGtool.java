@@ -3,7 +3,7 @@ package com.example.fastgraphic;
 import javax.swing.*;
 import java.awt.*;
 
-public class SwingGtool extends AbstractGtool {
+public class SwingGtool extends AbstractGtool{
 
     @Override
     protected Frame getFrame() {

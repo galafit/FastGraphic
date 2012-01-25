@@ -5,12 +5,16 @@ package com.example.fastgraphic;
  */
 public class GToolFactory {
 
-    public static AbstractGtool getGTool(Parameters params) {
+    public static GTool getGTool(Parameters params) {
         if (params.getGTool() == GToolName.AWT) {
             return new AWTGTool(params);
         }
         if (params.getGTool() == GToolName.SWING) {
             return new SwingGtool(params);
+        }
+        if (params.getGTool() == GToolName.ACTIVE_RENDERING) {
+            return  new ActiveRenderingExample(params);
+
         }
         throw new UnsupportedOperationException("todo ");
     }

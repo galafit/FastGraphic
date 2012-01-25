@@ -8,7 +8,8 @@ public enum GToolName {
     SWING("SWING"),
     FULL_SCREEN("Full Screen"),
     OPEN_GL("OpenGL"),
-    VLCJ("Player (VLCJ)");
+    VLCJ("Player (VLCJ)"),
+    ACTIVE_RENDERING("Active Rendering");
 
     private String label;
 

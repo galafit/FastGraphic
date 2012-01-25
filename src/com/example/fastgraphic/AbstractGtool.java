@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGtool {
+public abstract class AbstractGtool implements GTool{
     protected Parameters params;
     protected final PaintingArea paintingArea = getPaintingArea();
     protected Frame frame = getFrame();
