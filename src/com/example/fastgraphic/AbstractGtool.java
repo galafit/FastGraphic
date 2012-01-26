@@ -39,7 +39,6 @@ public abstract class AbstractGtool implements GTool {
         paintingArea.setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
         paintingArea.setBackground(params.getBgColor().getColor());
         paintingArea.setForeground(params.getFgColor().getColor());
-        frame.add((Component) paintingArea);
         frame.pack();
         frame.setVisible(true);
         animator = new Animator(paintingArea, params.getFrameRate());

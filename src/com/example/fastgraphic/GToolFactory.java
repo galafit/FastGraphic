@@ -13,7 +13,7 @@ public class GToolFactory {
             return new SwingGtool(params);
         }
         if (params.getGTool() == GToolName.ACTIVE_RENDERING) {
-            return  new ActiveRenderingExample(params);
+            return  new ActiveRenderingGtool(params);
 
         }
         throw new UnsupportedOperationException("todo ");

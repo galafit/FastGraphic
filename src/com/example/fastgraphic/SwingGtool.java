@@ -17,6 +17,7 @@ public class SwingGtool extends AbstractGtool{
 
     public SwingGtool(Parameters params) {
         super(params);
+        frame.add((Component) paintingArea);
         ((JPanel) paintingArea).setOpaque(true);
     }
 
