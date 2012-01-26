@@ -6,7 +6,7 @@ package com.example.fastgraphic;
 	import java.util.Random;
 	import javax.swing.*;
 
-	public class ActiveRenderingExample extends JFrame implements Runnable,GTool {
+	public class ActiveRenderingExample extends JFrame implements Runnable {
 
 
         private long startTime = 0;

@@ -1,10 +1,15 @@
 package com.example.fastgraphic;
 
 
+import com.example.fastgraphic.animator.Animator;
+import com.example.fastgraphic.animator.PaintingArea;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Enumeration;
@@ -13,6 +18,7 @@ import java.util.Enumeration;
 public class OptionsWindow extends JFrame {
 
     final Parameters params;
+    private final Controller controller = new Controller();
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
@@ -112,7 +118,7 @@ public class OptionsWindow extends JFrame {
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsToParams(params);
-                GToolFactory.getGTool(params).startAnimation();
+                controller.start(params);
             }
         });
         

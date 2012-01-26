@@ -1,4 +1,4 @@
-package com.example.fastgraphic;
+package com.example.fastgraphic.animator;
 
 public class Animator {
     private int frameRate;
@@ -16,7 +16,7 @@ public class Animator {
         Runnable r = new Runnable(){
             public void run() {
                 while (isRunning) {
-                    paintingArea.repaint();
+                    paintingArea.changeFrame();
                     synchFramerate();
                 }
             }
