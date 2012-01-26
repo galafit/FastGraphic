@@ -1,10 +1,11 @@
 package com.example.fastgraphic;
 
-	import java.awt.*;
+	import com.example.fastgraphic.painters.CompositePainter;
+
+    import java.awt.*;
 	import java.awt.event.*;
 	import java.awt.image.BufferStrategy;
-	import java.util.Random;
-	import javax.swing.*;
+    import javax.swing.*;
 
 	public class ActiveRenderingExample extends JFrame implements Runnable {
 
@@ -73,7 +74,7 @@ package com.example.fastgraphic;
 
 	    public void run() {
 	        BufferStrategy bs = getBufferStrategy();
-            CompositePainter painter = new CompositePainter(params);
+            CompositePainter painter = new CompositePainter(params.getActivePainters());
 	        while (running) {
 	            Graphics2D g = (Graphics2D) bs.getDrawGraphics();
                 g.setClip(getRootPane().getBounds());

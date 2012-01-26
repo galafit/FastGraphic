@@ -1,25 +1,25 @@
 package com.example.fastgraphic;
 
 import com.example.fastgraphic.animator.PaintingArea;
+import com.example.fastgraphic.painters.CompositePainter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-public class SwingGtool implements PaintingArea {
+public class SwingPaintingArea implements PaintingArea {
 
     private Parameters params;
     private JFrame frame = new JFrame();
     private CompositePainter painter;
-    private SwingGtool.SwingPaintingArea paintingArea;
+    private PaintingPanel paintingArea;
     private Controller controller;
 
-    public SwingGtool(Parameters params, Controller contrl) {
+    public SwingPaintingArea(Parameters params, Controller contrl) {
         this.controller = contrl;
         this.params = params;
-        painter = new CompositePainter(params);
+        painter = new CompositePainter(params.getActivePainters());
         frame.setTitle(params.getGTool().getLabel());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
@@ -29,7 +29,7 @@ public class SwingGtool implements PaintingArea {
                 frame.dispose();
             }
         });
-        paintingArea = new SwingPaintingArea();
+        paintingArea = new PaintingPanel();
         frame.add(paintingArea);
         frame.pack();
         frame.setVisible(true);
@@ -43,8 +43,8 @@ public class SwingGtool implements PaintingArea {
        return frame;
     }
 
-    class SwingPaintingArea extends JPanel {
-        SwingPaintingArea() {
+    class PaintingPanel extends JPanel {
+        PaintingPanel() {
             setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
             setBackground(params.getBgColor().getColor());
             setForeground(params.getFgColor().getColor());

@@ -1,29 +1,27 @@
 package com.example.fastgraphic;
 
-import com.example.fastgraphic.animator.Animator;
 import com.example.fastgraphic.animator.PaintingArea;
+import com.example.fastgraphic.painters.CompositePainter;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 /**
  * Class to display animation using AWT
  */
-public class AWTGTool  implements PaintingArea{
+public class AWTPaintingArea implements PaintingArea{
 
     private Parameters params;
         private Frame frame = new Frame();
         private CompositePainter painter;
-        private AWTPaintingArea paintingArea;
+        private PaintingCanvas paintingArea;
         private Controller controller;
 
-        public AWTGTool(Parameters params, Controller contrl) {
+        public AWTPaintingArea(Parameters params, Controller contrl) {
             controller = contrl;
             this.params = params;
-            painter = new CompositePainter(params);
+            painter = new CompositePainter(params.getActivePainters());
             frame.setTitle(params.getGTool().getLabel());
             frame.addWindowListener(new WindowAdapter() {
                 @Override
@@ -32,7 +30,7 @@ public class AWTGTool  implements PaintingArea{
                     frame.dispose();
                 }
             });
-            paintingArea = new AWTPaintingArea();
+            paintingArea = new PaintingCanvas();
             frame.add(paintingArea);
             frame.pack();
             frame.setVisible(true);
@@ -46,8 +44,8 @@ public class AWTGTool  implements PaintingArea{
            return frame;
         }
 
-        class AWTPaintingArea extends Canvas {
-            AWTPaintingArea() {
+        class PaintingCanvas extends Canvas {
+            PaintingCanvas() {
                 setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
                 setBackground(params.getBgColor().getColor());
                 setForeground(params.getFgColor().getColor());

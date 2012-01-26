@@ -1,6 +1,14 @@
 package com.example.fastgraphic;
 
 
+import com.example.fastgraphic.painters.LinePainter;
+import com.example.fastgraphic.painters.Painter;
+import com.example.fastgraphic.painters.SinusPainter;
+import com.example.fastgraphic.painters.SlowPainter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Parameters {
 
     private int width = 640;
@@ -16,6 +24,23 @@ public class Parameters {
     private boolean useBgFlipPainter;
     private boolean useSlowPainter;
 
+
+    public List<Painter> getActivePainters() {
+        List<Painter> activePainters = new ArrayList<Painter>();
+       if (isUseBgFlipPainter()) {
+            activePainters.add(new BGFlipPainter());
+        }
+        if (isUseLinePainter()) {
+            activePainters.add(new LinePainter(getFrameShift()));
+        }
+        if (isUseSinusPainter()) {
+            activePainters.add(new SinusPainter(getFrameShift()));
+        }
+        if (isUseSlowPainter()) {
+            activePainters.add(new SlowPainter());
+        }
+        return activePainters;
+    }
 
     public int getWidth() {
         return width;
