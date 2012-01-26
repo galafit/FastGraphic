@@ -4,6 +4,8 @@ import com.example.fastgraphic.animator.PaintingArea;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class SwingGtool implements PaintingArea {
@@ -12,12 +14,21 @@ public class SwingGtool implements PaintingArea {
     private JFrame frame = new JFrame();
     private CompositePainter painter;
     private SwingGtool.SwingPaintingArea paintingArea;
+    private Controller controller;
 
-    public SwingGtool(Parameters params) {
+    public SwingGtool(Parameters params, Controller contrl) {
+        this.controller = contrl;
         this.params = params;
         painter = new CompositePainter(params);
         frame.setTitle(params.getGTool().getLabel());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                controller.stopAnimation();
+                frame.dispose();
+            }
+        });
         paintingArea = new SwingPaintingArea();
         frame.add(paintingArea);
         frame.pack();

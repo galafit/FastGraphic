@@ -18,14 +18,17 @@ public class AWTGTool  implements PaintingArea{
         private Frame frame = new Frame();
         private CompositePainter painter;
         private AWTPaintingArea paintingArea;
+        private Controller controller;
 
-        public AWTGTool(Parameters params) {
+        public AWTGTool(Parameters params, Controller contrl) {
+            controller = contrl;
             this.params = params;
             painter = new CompositePainter(params);
             frame.setTitle(params.getGTool().getLabel());
             frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
+                    controller.stopAnimation();
                     frame.dispose();
                 }
             });

@@ -7,17 +7,15 @@ import com.example.fastgraphic.animator.PaintingArea;
  */
 public class GToolFactory {
 
-    public static PaintingArea getGTool(Parameters params) {
+    public static PaintingArea getGTool(Parameters params,Controller controller) {
         if (params.getGTool() == GToolName.AWT) {
-            return new AWTGTool(params);
+            return new AWTGTool(params,controller);
         }
         if (params.getGTool() == GToolName.SWING) {
-            return new SwingGtool(params);
+            return new SwingGtool(params, controller);
         }
         if (params.getGTool() == GToolName.ACTIVE_RENDERING) {
-            /*return  new ActiveRenderingExample(params);*/
             throw new UnsupportedOperationException("todo");
-
         }
         throw new UnsupportedOperationException("todo ");
     }

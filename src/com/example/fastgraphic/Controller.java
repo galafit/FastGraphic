@@ -11,17 +11,16 @@ import java.awt.event.WindowEvent;
  */
 public class Controller {
 
+    Animator animator;
 
     public void start(Parameters params) {
-        PaintingArea paintingArea = GToolFactory.getGTool(params);
-        final Animator animator = new Animator(paintingArea, params.getFrameRate());
-        paintingArea.getMainWindow().addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                animator.stopAnimation();
-            }
-        });
+        PaintingArea paintingArea = GToolFactory.getGTool(params,this);
+        animator = new Animator(paintingArea, params.getFrameRate());
         animator.startAnimation();
+    }
+
+    public void stopAnimation(){
+       animator.stopAnimation();
     }
 
 }
