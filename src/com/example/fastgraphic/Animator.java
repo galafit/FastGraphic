@@ -12,6 +12,7 @@ public class Animator {
     }
 
     public void startAnimation() {
+        cycleTime = System.currentTimeMillis();
         Runnable r = new Runnable(){
             public void run() {
                 while (isRunning) {
