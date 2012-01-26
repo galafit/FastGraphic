@@ -20,6 +20,8 @@ package com.example.fastgraphic;
              this.params  = params;
             this.width = params.getWidth();
 	        this.height = params.getHeight();
+            setBackground(params.getBgColor().getColor());
+            setForeground(params.getFgColor().getColor());
 
 	        // отключаем repaint и двойную буферизацию swing-компонентов,
 	        // потому что всё равно всё сами перерисовываем
@@ -74,6 +76,7 @@ package com.example.fastgraphic;
             CompositePainter painter = new CompositePainter(params);
 	        while (running) {
 	            Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+                g.setClip(getRootPane().getBounds());
 
 	            // т.к. аппаратный буфер создается для всего окна целиком,
 	            // то при перерисовке приходится учитывать размер рамки и заголовок окна,
@@ -81,7 +84,7 @@ package com.example.fastgraphic;
 	            Insets ins = getInsets();
 
 	            // выводим 1000 случайных линий
-//	            g.clearRect(ins.left, ins.top, width, height);
+	            g.clearRect(ins.left, ins.top, width, height);
 	            painter.paint(g);
 
 	            // обязательно
