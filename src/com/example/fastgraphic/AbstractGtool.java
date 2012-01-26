@@ -12,17 +12,19 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractGtool implements GTool{
+public abstract class AbstractGtool implements GTool {
     protected Parameters params;
     protected final PaintingArea paintingArea = getPaintingArea();
     protected Frame frame = getFrame();
     protected CompositePainter painter;
+    private Animator animator;
+
 
     protected abstract Frame getFrame();
 
     protected abstract PaintingArea getPaintingArea();
 
-    protected Timer changeFrameTimer;
+
 
     public AbstractGtool(Parameters params) {
         this.params = params;
@@ -31,7 +33,7 @@ public abstract class AbstractGtool implements GTool{
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 frame.dispose();
-                changeFrameTimer.stop();
+                animator.stopAnimation();
             }
         });
         paintingArea.setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
@@ -40,16 +42,10 @@ public abstract class AbstractGtool implements GTool{
         frame.add((Component) paintingArea);
         frame.pack();
         frame.setVisible(true);
+        animator = new Animator(paintingArea, params.getFrameRate());
     }
 
-    public void startAnimation() {
-        int delay = 1000 / params.getFrameRate();
-        ActionListener taskPerformer = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                paintingArea.repaint();
-            }
-        };
-        changeFrameTimer = new Timer(delay, taskPerformer);
-        changeFrameTimer.start();
+    public void startAnimation(){
+        animator.startAnimation();
     }
 }

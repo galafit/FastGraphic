@@ -109,13 +109,13 @@ package com.example.fastgraphic;
 
 
         public void startAnimation() {
-            try {
+ /*           try {
 	            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	        } catch (Exception e) {}
 	        SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
                     new ActiveRenderingExample(params);
 	            }
-	        });
+	        }); */
         }
 	}
