@@ -27,6 +27,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jogle" level="project" />
+    <orderEntry type="library" name="vlcj" level="project" />
   </component>
 </module>
 
