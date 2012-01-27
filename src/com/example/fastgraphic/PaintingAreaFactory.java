@@ -19,6 +19,9 @@ public class PaintingAreaFactory {
         if (params.getGTool() == PaintingAreaName.ACTIVE_RENDERING) {
             return new ActiveRenderingPaintingArea(params, controller);
         }
+        if (params.getGTool() == PaintingAreaName.FULL_SCREEN) {
+            return new FullScreenPaintingArea(params, controller);
+        }
         if (params.getGTool() == PaintingAreaName.OPEN_GL) {
             new JogleExample(params.getWidth(),params.getHeight(),params.getFrameRate());
             return null;
