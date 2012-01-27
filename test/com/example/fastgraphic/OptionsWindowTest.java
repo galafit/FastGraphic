@@ -21,7 +21,7 @@ public class OptionsWindowTest {
         assertEquals(params.getFgColor().getColor(),Color.GREEN);
         assertEquals(params.getFrameRate(), 60);
         assertEquals(params.getFrameShift(),0,5f);
-        assertEquals(params.getGTool(), GToolName.AWT);
+        assertEquals(params.getGTool(), PaintingAreaName.AWT);
         assertEquals(params.getHeight(),480);
         assertEquals(params.getWidth(),640);
         assertEquals(params.isUseBgFlipPainter(),false);

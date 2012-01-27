@@ -1,17 +1,10 @@
 package com.example.fastgraphic;
 
 
-import com.example.fastgraphic.animator.Animator;
-import com.example.fastgraphic.animator.PaintingArea;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Enumeration;
 
 
@@ -53,9 +46,9 @@ public class OptionsWindow extends JFrame {
         // Panel with Radio Buttons to chose Tool
         JPanel toolPanel = new JPanel();
         toolButtonGroup = new ButtonGroup();
-        for (GToolName gToolName : GToolName.values()) {
-            JRadioButton radio = new JRadioButton(gToolName.getLabel());
-            radio.setActionCommand(gToolName.name());
+        for (PaintingAreaName paintingAreaName : PaintingAreaName.values()) {
+            JRadioButton radio = new JRadioButton(paintingAreaName.getLabel());
+            radio.setActionCommand(paintingAreaName.name());
             toolPanel.add(radio);
             toolButtonGroup.add(radio);
         }
@@ -182,7 +175,7 @@ public class OptionsWindow extends JFrame {
         while (buttonEnumeration.hasMoreElements()) {
             AbstractButton button =  buttonEnumeration.nextElement();
             if(button.isSelected()){
-                params.setGTool(GToolName.valueOf(button.getActionCommand()));
+                params.setGTool(PaintingAreaName.valueOf(button.getActionCommand()));
             }
         }
     }

@@ -13,7 +13,7 @@ public class SwingPaintingArea implements PaintingArea {
     private Parameters params;
     private JFrame frame = new JFrame();
     private CompositePainter painter;
-    private PaintingPanel paintingArea;
+    private PaintingPanel paintingPanel;
     private Controller controller;
 
     public SwingPaintingArea(Parameters params, Controller contrl) {
@@ -29,18 +29,14 @@ public class SwingPaintingArea implements PaintingArea {
                 frame.dispose();
             }
         });
-        paintingArea = new PaintingPanel();
-        frame.add(paintingArea);
+        paintingPanel = new PaintingPanel();
+        frame.add(paintingPanel);
         frame.pack();
         frame.setVisible(true);
     }
 
     public void changeFrame() {
-        paintingArea.repaint();
-    }
-
-    public Frame getMainWindow() {
-       return frame;
+        paintingPanel.repaint();
     }
 
     class PaintingPanel extends JPanel {

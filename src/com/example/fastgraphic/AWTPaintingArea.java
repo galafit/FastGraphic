@@ -15,7 +15,7 @@ public class AWTPaintingArea implements PaintingArea{
     private Parameters params;
         private Frame frame = new Frame();
         private CompositePainter painter;
-        private PaintingCanvas paintingArea;
+        private PaintingCanvas paintingCanvas;
         private Controller controller;
 
         public AWTPaintingArea(Parameters params, Controller contrl) {
@@ -30,18 +30,14 @@ public class AWTPaintingArea implements PaintingArea{
                     frame.dispose();
                 }
             });
-            paintingArea = new PaintingCanvas();
-            frame.add(paintingArea);
+            paintingCanvas = new PaintingCanvas();
+            frame.add(paintingCanvas);
             frame.pack();
             frame.setVisible(true);
         }
 
         public void changeFrame() {
-            paintingArea.repaint();
-        }
-
-        public Frame getMainWindow() {
-           return frame;
+            paintingCanvas.repaint();
         }
 
         class PaintingCanvas extends Canvas {
