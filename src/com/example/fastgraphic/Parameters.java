@@ -24,6 +24,9 @@ public class Parameters {
     private boolean useBgFlipPainter;
     private boolean useSlowPainter;
 
+    private boolean isSwingDoubleBuff = false;
+    private boolean isFullScreen = false;
+
 
     public List<Painter> getActivePainters() {
         List<Painter> activePainters = new ArrayList<Painter>();
@@ -136,5 +139,21 @@ public class Parameters {
 
     public void setUseSlowPainter(boolean useSlowPainter) {
         this.useSlowPainter = useSlowPainter;
+    }
+
+    public boolean isSwingDoubleBuff() {
+        return isSwingDoubleBuff;
+    }
+
+    public void setSwingDoubleBuff(boolean swingDoubleBuff) {
+        isSwingDoubleBuff = swingDoubleBuff;
+    }
+
+    public boolean isFullScreen() {
+        return isFullScreen;
+    }
+
+    public void setFullScreen(boolean fullScreen) {
+        isFullScreen = fullScreen;
     }
 }

@@ -32,6 +32,8 @@ public class SwingPaintingArea implements PaintingArea {
         paintingPanel = new PaintingPanel();
         frame.add(paintingPanel);
         frame.pack();
+//        frame.getRootPane().setDoubleBuffered(false);
+ //       RepaintManager.currentManager(frame).setDoubleBufferingEnabled(false);
         frame.setVisible(true);
     }
 

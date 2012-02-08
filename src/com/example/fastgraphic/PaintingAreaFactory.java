@@ -1,8 +1,7 @@
 package com.example.fastgraphic;
 
 import com.example.fastgraphic.animator.PaintingArea;
-
-import java.lang.reflect.InvocationTargetException;
+import com.example.fastgraphic.painters.DoubleBufferingFullScreen;
 
 /**
  * Factory to create PaintingAreaName with specified Parameters
@@ -27,13 +26,21 @@ public class PaintingAreaFactory {
             return null;
         }
         if (params.getGTool() == PaintingAreaName.VLCJ) {
+            return new ActiveRenderingDoubleBufferring(params, controller);
+
+        }
+        /* if (params.getGTool() == PaintingAreaName.VLCJ) {
+            return new VolatileImagePaintingArea(params, controller);
+
+        }  */
+       /* if (params.getGTool() == PaintingAreaName.VLCJ) {
             try {
                 new VlcjExample(params);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
-        }
+        }   */
         throw new UnsupportedOperationException("todo ");
     }
 
