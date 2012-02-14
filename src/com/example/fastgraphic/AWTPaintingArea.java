@@ -8,21 +8,24 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Class to display animation using AWT
+ *
+ * Standard Passive rendering using AWT components
+ *
  */
+
 public class AWTPaintingArea implements PaintingArea{
 
-    private Parameters params;
-        private Frame frame = new Frame();
+        private Frame frame;
         private CompositePainter painter;
         private PaintingCanvas paintingCanvas;
         private Controller controller;
 
-        public AWTPaintingArea(Parameters params, Controller contrl) {
+        public AWTPaintingArea(String title, int width, int height,
+                               Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
             controller = contrl;
-            this.params = params;
-            painter = new CompositePainter(params.getActivePainters());
-            frame.setTitle(params.getGTool().getLabel());
+            this.painter = painter;
+            frame = new Frame();
+            frame.setTitle(title);
             frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -31,6 +34,9 @@ public class AWTPaintingArea implements PaintingArea{
                 }
             });
             paintingCanvas = new PaintingCanvas();
+            paintingCanvas.setPreferredSize(new Dimension(width, height));
+            paintingCanvas.setBackground(bgColor);
+            paintingCanvas.setForeground(fgColor);
             frame.add(paintingCanvas);
             frame.pack();
             frame.setVisible(true);
@@ -41,12 +47,6 @@ public class AWTPaintingArea implements PaintingArea{
         }
 
         class PaintingCanvas extends Canvas {
-            PaintingCanvas() {
-                setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
-                setBackground(params.getBgColor().getColor());
-                setForeground(params.getFgColor().getColor());
-            }
-
             @Override
             public void paint(Graphics g) {
                 super.paint(g);

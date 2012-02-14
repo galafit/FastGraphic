@@ -1,4 +1,4 @@
-package com.example.fastgraphic;
+package com.example.fastgraphic.painters;
 
 import com.example.fastgraphic.painters.Painter;
 

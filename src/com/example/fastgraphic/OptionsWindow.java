@@ -20,8 +20,8 @@ public class OptionsWindow extends JFrame {
     JCheckBox bgCheckBox = new JCheckBox("BG change");
     JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
-    JCheckBox swingDoubleBuff = new JCheckBox("Double Buffering");
-    JCheckBox fullScreen = new JCheckBox("Full Screen");
+    JCheckBox isSwingDoubleBuff = new JCheckBox("Double Buffering");
+    JCheckBox isFullScreen = new JCheckBox("Full Screen");
 
     JFormattedTextField frameRate = new JFormattedTextField(1000);
     JFormattedTextField frameShift = new JFormattedTextField(0.1f);
@@ -30,7 +30,6 @@ public class OptionsWindow extends JFrame {
     JFormattedTextField heightField = new JFormattedTextField(1000);
     JComboBox bgChoice = new JComboBox(AvailableColors.values());
     JComboBox fgChoice = new JComboBox(AvailableColors.values());
-    JComboBox bufferingChoice = new JComboBox(BufferingType.values());
 
     private ButtonGroup toolButtonGroup;
 
@@ -39,6 +38,13 @@ public class OptionsWindow extends JFrame {
         panel.add(new JLabel(label));
         panel.add(component);
         return panel;
+    }
+    
+    private JPanel titlePanel (String title, JPanel panel){
+        JPanel titledPanel =  new JPanel(new FlowLayout(FlowLayout.CENTER,5,10));
+        titledPanel.setBorder(BorderFactory.createTitledBorder(title));
+        titledPanel.add(panel);
+        return titledPanel;
     }
 
     public OptionsWindow(Parameters parameters) {
@@ -51,65 +57,81 @@ public class OptionsWindow extends JFrame {
         frameShift.setColumns(2);
         
         // Panel with Radio Buttons to chose Tool
-        JPanel toolPanel = new JPanel();
+        JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,15));
+        toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         toolButtonGroup = new ButtonGroup();
-        HashMap<PaintingAreaName,JRadioButton> radioButtonHashMap= new HashMap<PaintingAreaName,JRadioButton>();
+        HashMap<PaintingAreaName,JPanel> radioButtonHashMap= new HashMap<PaintingAreaName,JPanel>();
         for (PaintingAreaName paintingAreaName : PaintingAreaName.values()) {
             JRadioButton radio = new JRadioButton(paintingAreaName.getLabel());
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
+            buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            buttonPanel.add(radio);
             radio.setActionCommand(paintingAreaName.name());
+// in Panel of SWING radio button we add the checkBox "isSwingDoubleBuff" to permit to chose whether the SWING Application
+// will work with Double Buffering "On" or "Off".
+// The ActionListeners control that this checkbox will be enabled only when SWING mode is chosen
+//
+// in Panel of PAGE_FLIPPING radio button we add the checkBox "isFullScreen" to permit to chose whether the PageFlipping Application
+// will work with en Full Screen or Window mode.
+// The ActionListeners control that this checkbox will be enabled only when PAGE_FLIPPING mode is chosen
+            if(paintingAreaName.equals(PaintingAreaName.SWING)){
+                buttonPanel.add(isSwingDoubleBuff);
+                radio.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                       isSwingDoubleBuff.setSelected(true);
+                       isSwingDoubleBuff.setEnabled(true);
+
+                        isFullScreen.setSelected(false);
+                        isFullScreen.setEnabled(false);
+                    }
+                });
+            }
+            if(paintingAreaName.equals(PaintingAreaName.PAGE_FLIPPING)){
+                buttonPanel.add(isFullScreen);
+                radio.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        isFullScreen.setSelected(true);
+                        isFullScreen.setEnabled(true);
+
+                        isSwingDoubleBuff.setSelected(false);
+                        isSwingDoubleBuff.setEnabled(false);
+                    }
+                });
+            }
+            else{
+                radio.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        isFullScreen.setSelected(false);
+                        isFullScreen.setEnabled(false);
+                        isSwingDoubleBuff.setSelected(false);
+                        isSwingDoubleBuff.setEnabled(false);
+                    }
+                });
+            }
+
             toolButtonGroup.add(radio);
-            radioButtonHashMap.put(paintingAreaName,radio);
+            radioButtonHashMap.put(paintingAreaName,buttonPanel);
         }
-        JPanel passiveRenderingPanel = new JPanel(new BorderLayout());
-        passiveRenderingPanel.setBorder(BorderFactory.createTitledBorder("Passive Rendering"));
-        JPanel downPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        downPanel1.add(radioButtonHashMap.get(PaintingAreaName.SWING));
-        downPanel1.add(swingDoubleBuff);
-        downPanel1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        JPanel upPanel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        upPanel1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        upPanel1.add(radioButtonHashMap.get(PaintingAreaName.AWT));
-        passiveRenderingPanel.add(upPanel1,BorderLayout.NORTH);
-        passiveRenderingPanel.add(downPanel1,BorderLayout.SOUTH);
-        
-        
-        JPanel activeRenderingPanel = new JPanel(new BorderLayout());
-        activeRenderingPanel.setBorder(BorderFactory.createTitledBorder("Active Rendering"));
-        JPanel upPanel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        upPanel2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        upPanel2.add(radioButtonHashMap.get(PaintingAreaName.DIRECT));
-        upPanel2.add(radioButtonHashMap.get(PaintingAreaName.DOUBLE_BUFF));
-        upPanel2.add(radioButtonHashMap.get(PaintingAreaName.ACCELERATED_BUFF));
-        JPanel downPanel2 = new JPanel();
-        downPanel2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        downPanel2.add(radioButtonHashMap.get(PaintingAreaName.PAGE_FLIPPING));
-        downPanel2.add(fullScreen);
-        activeRenderingPanel.add(upPanel2,BorderLayout.NORTH);
-        activeRenderingPanel.add(downPanel2,BorderLayout.SOUTH);
-        
-        JPanel examplePanel = new JPanel(new BorderLayout());
-        examplePanel.setBorder(BorderFactory.createTitledBorder("Additional"));
-        JPanel upPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel downPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        upPanel3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        downPanel3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        upPanel3.add(radioButtonHashMap.get(PaintingAreaName.OPEN_GL));
-        downPanel3.add(radioButtonHashMap.get(PaintingAreaName.VLCJ));
-        examplePanel.add(upPanel3,BorderLayout.NORTH);
-        examplePanel.add(downPanel3,BorderLayout.SOUTH);
-        
-        toolPanel.add(passiveRenderingPanel);
-        toolPanel.add(activeRenderingPanel);
-        toolPanel.add(examplePanel);
 
+        JPanel passiveRenderingPanel = new JPanel(new BorderLayout(0,3));
+        passiveRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.AWT),BorderLayout.SOUTH);
+        passiveRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.SWING),BorderLayout.NORTH);
 
-        // Panel with CheckBox Buttons  to choose graphics that will be painted
-        JPanel graphPanel = new JPanel(new GridLayout(0, 2, 20, 5));
-        graphPanel.setBorder(BorderFactory.createTitledBorder("Graphics"));
-        graphPanel.add(sinusCheckBox);
-        graphPanel.add(lineCheckBox);
-        graphPanel.add(bgCheckBox);
-        graphPanel.add(slowCheckBox);
+        JPanel activeRenderingPanel = new JPanel(new BorderLayout(0,3));
+        JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
+        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.DIRECT));
+        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.DOUBLE_BUFF));
+        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.ACCELERATED_BUFF));
+        activeRenderingPanel.add(groupPanel,BorderLayout.SOUTH);
+        activeRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.PAGE_FLIPPING),BorderLayout.NORTH);
+        
+        JPanel examplePanel = new JPanel(new BorderLayout(0,3));
+        examplePanel.add(radioButtonHashMap.get(PaintingAreaName.OPEN_GL),BorderLayout.NORTH);
+        examplePanel.add(radioButtonHashMap.get(PaintingAreaName.VLCJ),BorderLayout.SOUTH);
+        
+        toolPanel.add(titlePanel("Passive Rendering",passiveRenderingPanel));
+        toolPanel.add(titlePanel("Active Rendering",activeRenderingPanel));
+        toolPanel.add(titlePanel("Additional",examplePanel));
 
 
         // Panel describing Frames Changing
@@ -120,43 +142,39 @@ public class OptionsWindow extends JFrame {
         framePanel.add(frameRatePanel, BorderLayout.NORTH);
         framePanel.add(frameShiftPanel, BorderLayout.CENTER);
 
+        // Panel with CheckBox Buttons  to choose graphics that will be painted
+        JPanel graphPanel = new JPanel(new GridLayout(0, 2, 10, 5));
+        graphPanel.setBorder(BorderFactory.createTitledBorder("Graphics"));
+        graphPanel.add(sinusCheckBox);
+        graphPanel.add(lineCheckBox);
+        graphPanel.add(bgCheckBox);
+        graphPanel.add(slowCheckBox);
 
         // Panel with Painting Options
-        JPanel optionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        optionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
+        JPanel paintingOptionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        paintingOptionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
 
         bgChoice.setSelectedItem(params.getBgColor());
         fgChoice.setSelectedItem(params.getFgColor());
-        // Join Labels with the Fields
-        JPanel bgChoicePanel = composeLabelField("BG Color", bgChoice);
-        JPanel fgChoicePanel = composeLabelField("FG Color", fgChoice);
-        JPanel widthPanel = composeLabelField("Width ", widthField);
-        JPanel heightPanel = composeLabelField("Height", heightField);
 
         JPanel colorPanel = new JPanel(new BorderLayout());
-        colorPanel.add(fgChoicePanel, BorderLayout.NORTH);
-        colorPanel.add(bgChoicePanel, BorderLayout.CENTER);
+        colorPanel.add(composeLabelField("FG Color", fgChoice), BorderLayout.NORTH);
+        colorPanel.add(composeLabelField("BG Color", bgChoice), BorderLayout.CENTER);
 
         JPanel sizePanel = new JPanel(new BorderLayout());
-        sizePanel.add(widthPanel, BorderLayout.NORTH);
-        sizePanel.add(heightPanel, BorderLayout.CENTER);
+        sizePanel.add(composeLabelField("Width ", widthField), BorderLayout.NORTH);
+        sizePanel.add(composeLabelField("Height", heightField), BorderLayout.CENTER);
 
-        optionsPanel.add(colorPanel);
-        optionsPanel.add(sizePanel);
+        paintingOptionsPanel.add(colorPanel);
+        paintingOptionsPanel.add(sizePanel);
 
-        // Panel to chose the mode of Painting.
-        // For the Tools  "OpenGL" and "Video Player" it will be disabled
-        JPanel modePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 20));
-        modePanel.setBorder(BorderFactory.createTitledBorder("Paint Mode"));
-        modePanel.add(bufferingChoice);
+        // Panel that join all Graphics and Painting Options
+        JPanel optionsPanel = new JPanel(new BorderLayout());
+        optionsPanel.add(graphPanel,BorderLayout.WEST);
+        optionsPanel.add(framePanel,BorderLayout.CENTER);
+        optionsPanel.add(paintingOptionsPanel,BorderLayout.EAST);
 
-        JPanel containPanel = new JPanel();
-        containPanel.setLayout(new GridLayout(2, 2, 20, 5));
-        containPanel.add(graphPanel);
-        containPanel.add(framePanel);
-        containPanel.add(optionsPanel);
-        containPanel.add(modePanel);
-
+        // Panel with buttons "Start" and "Exit"
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -164,25 +182,27 @@ public class OptionsWindow extends JFrame {
                 controller.start(params);
             }
         });
-        
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-                
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(exitButton);
         buttonPanel.add(startButton);
 
+        // Root Panel of the OptionsWindow
+        getRootPane().setLayout(new BorderLayout(0, 20));
+        getRootPane().add(toolPanel, BorderLayout.NORTH);
+        getRootPane().add(optionsPanel, BorderLayout.CENTER);
+        getRootPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        add(toolPanel, BorderLayout.NORTH);
-        add(containPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
         paramsToControls(params);
         pack();
         setVisible(true);
+        // put the window at the screen center
+        setLocationRelativeTo(null);
     }
 
     public void paramsToControls(Parameters params) {
@@ -196,10 +216,9 @@ public class OptionsWindow extends JFrame {
         heightField.setValue(params.getHeight());
         bgChoice.setSelectedItem(params.getBgColor());
         fgChoice.setSelectedItem(params.getFgColor());
-        bufferingChoice.setSelectedItem(params.getBufferingType());
-        
-        swingDoubleBuff.setSelected(params.isSwingDoubleBuff());
-        fullScreen.setSelected(params.isFullScreen());
+
+        isSwingDoubleBuff.setSelected(params.isSwingDoubleBuff());
+        isFullScreen.setSelected(params.isFullScreen());
 
         Enumeration<AbstractButton> buttonEnumeration = toolButtonGroup.getElements();
         while (buttonEnumeration.hasMoreElements()) {
@@ -222,10 +241,9 @@ public class OptionsWindow extends JFrame {
         params.setHeight((Integer) heightField.getValue());
         params.setBgColor((AvailableColors)bgChoice.getSelectedItem());
         params.setFgColor((AvailableColors)fgChoice.getSelectedItem());
-        params.setBufferingType((BufferingType)bufferingChoice.getSelectedItem());
-        
-        params.setSwingDoubleBuff(swingDoubleBuff.isSelected());
-        params.setFullScreen(fullScreen.isSelected());
+
+        params.setSwingDoubleBuff(isSwingDoubleBuff.isSelected());
+        params.setFullScreen(isFullScreen.isSelected());
 
         Enumeration<AbstractButton> buttonEnumeration = toolButtonGroup.getElements();
         while (buttonEnumeration.hasMoreElements()) {

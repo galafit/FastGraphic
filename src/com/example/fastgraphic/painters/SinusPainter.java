@@ -19,7 +19,6 @@ public class SinusPainter implements Painter {
     public void paint(Graphics g) {
         int width = g.getClipBounds().width;
         int height = g.getClipBounds().height;
-
         Point previousPoint = new Point(0, height / 2);
         for (int i = 0; i < width; i++) {
             double x = (totalFrameShift +i) * 2 * Math.PI / width;

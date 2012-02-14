@@ -11,9 +11,8 @@ public enum PaintingAreaName {
     DIRECT("Direct"),
     DOUBLE_BUFF("Double Buffering"),
     ACCELERATED_BUFF("Accelerated Buffering"),
-    PAGE_FLIPPING ("Page Flipping"),
-    FULL_SCREEN("Full Screen"),
-    ACTIVE_RENDERING("Active Rendering");
+    PAGE_FLIPPING ("Page Flipping");
+
 
     private String label;
 

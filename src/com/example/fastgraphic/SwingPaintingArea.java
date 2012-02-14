@@ -8,19 +8,31 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ *
+ * Standard Passive rendering using SWING components
+ *
+ */
+
 public class SwingPaintingArea implements PaintingArea {
 
-    private Parameters params;
-    private JFrame frame = new JFrame();
+    private JFrame frame;
     private CompositePainter painter;
-    private PaintingPanel paintingPanel;
+    private JPanel paintingPanel;
     private Controller controller;
 
-    public SwingPaintingArea(Parameters params, Controller contrl) {
-        this.controller = contrl;
-        this.params = params;
-        painter = new CompositePainter(params.getActivePainters());
-        frame.setTitle(params.getGTool().getLabel());
+    public SwingPaintingArea(boolean isSwingDoubleBuff, String title, int width, int height,
+                             Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+        frame = new JFrame();
+        if(!isSwingDoubleBuff){
+            // turn off Double Buffering
+            frame.getRootPane().setDoubleBuffered(false);
+            //just for the case
+            RepaintManager.currentManager(frame).setDoubleBufferingEnabled(false);
+        }
+        controller = contrl;
+        this.painter = painter;
+        frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -30,10 +42,12 @@ public class SwingPaintingArea implements PaintingArea {
             }
         });
         paintingPanel = new PaintingPanel();
+        paintingPanel.setPreferredSize(new Dimension(width, height));
+        paintingPanel.setBackground(bgColor);
+        paintingPanel.setForeground(fgColor);
+        paintingPanel.setOpaque(true);
         frame.add(paintingPanel);
         frame.pack();
-//        frame.getRootPane().setDoubleBuffered(false);
- //       RepaintManager.currentManager(frame).setDoubleBufferingEnabled(false);
         frame.setVisible(true);
     }
 
@@ -42,13 +56,6 @@ public class SwingPaintingArea implements PaintingArea {
     }
 
     class PaintingPanel extends JPanel {
-        PaintingPanel() {
-            setPreferredSize(new Dimension(params.getWidth(), params.getHeight()));
-            setBackground(params.getBgColor().getColor());
-            setForeground(params.getFgColor().getColor());
-            setOpaque(true);
-        }
-
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);

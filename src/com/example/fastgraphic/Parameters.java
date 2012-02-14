@@ -1,10 +1,7 @@
 package com.example.fastgraphic;
 
 
-import com.example.fastgraphic.painters.LinePainter;
-import com.example.fastgraphic.painters.Painter;
-import com.example.fastgraphic.painters.SinusPainter;
-import com.example.fastgraphic.painters.SlowPainter;
+import com.example.fastgraphic.painters.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +14,13 @@ public class Parameters {
     private float frameShift = 0.5f;
     private AvailableColors bgColor = AvailableColors.BLACK;
     private AvailableColors fgColor = AvailableColors.GREEN;
-    private PaintingAreaName paintingAreaName = PaintingAreaName.AWT;
-    private BufferingType bufferingType = BufferingType.DIRECT;
+    private PaintingAreaName paintingAreaName = PaintingAreaName.SWING;
     private boolean useLinePainter;
     private boolean useSinusPainter = true;
     private boolean useBgFlipPainter;
     private boolean useSlowPainter;
 
-    private boolean isSwingDoubleBuff = false;
+    private boolean isSwingDoubleBuff = true;
     private boolean isFullScreen = false;
 
 
@@ -99,14 +95,6 @@ public class Parameters {
 
     public void setGTool(PaintingAreaName paintingAreaName) {
         this.paintingAreaName = paintingAreaName;
-    }
-
-    public BufferingType getBufferingType() {
-        return bufferingType;
-    }
-
-    public void setBufferingType(BufferingType bufferingType) {
-        this.bufferingType = bufferingType;
     }
 
     public boolean isUseLinePainter() {

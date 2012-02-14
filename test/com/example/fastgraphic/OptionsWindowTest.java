@@ -17,7 +17,6 @@ public class OptionsWindowTest {
         optionsWindow.paramsToControls(params);
         optionsWindow.controlsToParams(params);
         assertEquals(params.getBgColor().getColor(), Color.BLACK);
-        assertEquals(params.getBufferingType(),BufferingType.DIRECT);
         assertEquals(params.getFgColor().getColor(),Color.GREEN);
         assertEquals(params.getFrameRate(), 60);
         assertEquals(params.getFrameShift(),0,5f);
