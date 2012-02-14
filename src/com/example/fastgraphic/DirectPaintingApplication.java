@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
  * Direct Active rendering on the Screen without Buffering
  */
 
-public class DirectPaintingArea implements PaintingArea {
+public class DirectPaintingApplication implements PaintingArea {
 
     private Frame frame;
     private CompositePainter painter;
@@ -20,8 +20,8 @@ public class DirectPaintingArea implements PaintingArea {
     private Canvas paintingCanvas;
     private Rectangle paintingClip;
 
-    public DirectPaintingArea(String title, int width, int height,
-                              Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+    public DirectPaintingApplication(String title, int width, int height,
+                                     Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
         controller = contrl;
         this.painter = painter;
         paintingClip = new Rectangle(0,0,width,height);

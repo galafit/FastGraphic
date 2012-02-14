@@ -41,7 +41,7 @@ import java.awt.image.VolatileImage;
  *  http://content.gpwiki.org/index.php/Java:Tutorials:VolatileImage
  */
 
-public class VolatileImagePaintingArea  implements PaintingArea {
+public class AcceleratedDoubleBufferingApplication implements PaintingArea {
 
     private CompositePainter painter;
     private Controller controller;
@@ -52,8 +52,8 @@ public class VolatileImagePaintingArea  implements PaintingArea {
     private Color backgroundColor;
     private Color foregroundColor;
 
-    public VolatileImagePaintingArea(String title, int width, int height,
-                                     Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+    public AcceleratedDoubleBufferingApplication(String title, int width, int height,
+                                                 Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
         controller = contrl;
         this.painter = painter;
         paintingClip = new Rectangle(0,0,width,height);

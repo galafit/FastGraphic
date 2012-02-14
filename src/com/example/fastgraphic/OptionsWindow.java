@@ -18,7 +18,6 @@ public class OptionsWindow extends JFrame {
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
     JCheckBox bgCheckBox = new JCheckBox("BG change");
-    JCheckBox slowCheckBox = new JCheckBox("Slow Painting");
 
     JCheckBox isSwingDoubleBuff = new JCheckBox("Double Buffering");
     JCheckBox isFullScreen = new JCheckBox("Full Screen");
@@ -60,13 +59,13 @@ public class OptionsWindow extends JFrame {
         JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,15));
         toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         toolButtonGroup = new ButtonGroup();
-        HashMap<PaintingAreaName,JPanel> radioButtonHashMap= new HashMap<PaintingAreaName,JPanel>();
-        for (PaintingAreaName paintingAreaName : PaintingAreaName.values()) {
-            JRadioButton radio = new JRadioButton(paintingAreaName.getLabel());
+        HashMap<ApplicationType,JPanel> radioButtonHashMap= new HashMap<ApplicationType,JPanel>();
+        for (ApplicationType applicationType : ApplicationType.values()) {
+            JRadioButton radio = new JRadioButton(applicationType.getLabel());
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
             buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             buttonPanel.add(radio);
-            radio.setActionCommand(paintingAreaName.name());
+            radio.setActionCommand(applicationType.name());
 // in Panel of SWING radio button we add the checkBox "isSwingDoubleBuff" to permit to chose whether the SWING Application
 // will work with Double Buffering "On" or "Off".
 // The ActionListeners control that this checkbox will be enabled only when SWING mode is chosen
@@ -74,7 +73,7 @@ public class OptionsWindow extends JFrame {
 // in Panel of PAGE_FLIPPING radio button we add the checkBox "isFullScreen" to permit to chose whether the PageFlipping Application
 // will work with en Full Screen or Window mode.
 // The ActionListeners control that this checkbox will be enabled only when PAGE_FLIPPING mode is chosen
-            if(paintingAreaName.equals(PaintingAreaName.SWING)){
+            if(applicationType.equals(ApplicationType.SWING)){
                 buttonPanel.add(isSwingDoubleBuff);
                 radio.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
@@ -86,7 +85,7 @@ public class OptionsWindow extends JFrame {
                     }
                 });
             }
-            if(paintingAreaName.equals(PaintingAreaName.PAGE_FLIPPING)){
+            if(applicationType.equals(ApplicationType.PAGE_FLIPPING)){
                 buttonPanel.add(isFullScreen);
                 radio.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent actionEvent) {
@@ -110,24 +109,24 @@ public class OptionsWindow extends JFrame {
             }
 
             toolButtonGroup.add(radio);
-            radioButtonHashMap.put(paintingAreaName,buttonPanel);
+            radioButtonHashMap.put(applicationType,buttonPanel);
         }
 
         JPanel passiveRenderingPanel = new JPanel(new BorderLayout(0,3));
-        passiveRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.AWT),BorderLayout.SOUTH);
-        passiveRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.SWING),BorderLayout.NORTH);
+        passiveRenderingPanel.add(radioButtonHashMap.get(ApplicationType.AWT),BorderLayout.SOUTH);
+        passiveRenderingPanel.add(radioButtonHashMap.get(ApplicationType.SWING),BorderLayout.NORTH);
 
         JPanel activeRenderingPanel = new JPanel(new BorderLayout(0,3));
         JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
-        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.DIRECT));
-        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.DOUBLE_BUFF));
-        groupPanel.add(radioButtonHashMap.get(PaintingAreaName.ACCELERATED_BUFF));
+        groupPanel.add(radioButtonHashMap.get(ApplicationType.DIRECT));
+        groupPanel.add(radioButtonHashMap.get(ApplicationType.DOUBLE_BUFF));
+        groupPanel.add(radioButtonHashMap.get(ApplicationType.ACCELERATED_BUFF));
         activeRenderingPanel.add(groupPanel,BorderLayout.SOUTH);
-        activeRenderingPanel.add(radioButtonHashMap.get(PaintingAreaName.PAGE_FLIPPING),BorderLayout.NORTH);
+        activeRenderingPanel.add(radioButtonHashMap.get(ApplicationType.PAGE_FLIPPING),BorderLayout.NORTH);
         
         JPanel examplePanel = new JPanel(new BorderLayout(0,3));
-        examplePanel.add(radioButtonHashMap.get(PaintingAreaName.OPEN_GL),BorderLayout.NORTH);
-        examplePanel.add(radioButtonHashMap.get(PaintingAreaName.VLCJ),BorderLayout.SOUTH);
+        examplePanel.add(radioButtonHashMap.get(ApplicationType.OPEN_GL),BorderLayout.NORTH);
+        examplePanel.add(radioButtonHashMap.get(ApplicationType.VLCJ),BorderLayout.SOUTH);
         
         toolPanel.add(titlePanel("Passive Rendering",passiveRenderingPanel));
         toolPanel.add(titlePanel("Active Rendering",activeRenderingPanel));
@@ -145,10 +144,11 @@ public class OptionsWindow extends JFrame {
         // Panel with CheckBox Buttons  to choose graphics that will be painted
         JPanel graphPanel = new JPanel(new GridLayout(0, 2, 10, 5));
         graphPanel.setBorder(BorderFactory.createTitledBorder("Graphics"));
-        graphPanel.add(sinusCheckBox);
-        graphPanel.add(lineCheckBox);
         graphPanel.add(bgCheckBox);
-        graphPanel.add(slowCheckBox);
+        graphPanel.add(sinusCheckBox);
+        graphPanel.add(new Label("")); // just empty position
+        graphPanel.add(lineCheckBox);
+
 
         // Panel with Painting Options
         JPanel paintingOptionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -170,9 +170,9 @@ public class OptionsWindow extends JFrame {
 
         // Panel that join all Graphics and Painting Options
         JPanel optionsPanel = new JPanel(new BorderLayout());
-        optionsPanel.add(graphPanel,BorderLayout.WEST);
-        optionsPanel.add(framePanel,BorderLayout.CENTER);
-        optionsPanel.add(paintingOptionsPanel,BorderLayout.EAST);
+        optionsPanel.add(paintingOptionsPanel,BorderLayout.WEST);
+        optionsPanel.add(graphPanel,BorderLayout.CENTER);
+        optionsPanel.add(framePanel,BorderLayout.EAST);
 
         // Panel with buttons "Start" and "Exit"
         JButton startButton = new JButton("Start");
@@ -209,7 +209,6 @@ public class OptionsWindow extends JFrame {
         sinusCheckBox.setSelected(params.isUseSinusPainter());
         lineCheckBox.setSelected(params.isUseLinePainter());
         bgCheckBox.setSelected(params.isUseBgFlipPainter());
-        slowCheckBox.setSelected(params.isUseSlowPainter());
         frameRate.setValue(params.getFrameRate());
         frameShift.setValue(params.getFrameShift());
         widthField.setValue(params.getWidth());
@@ -223,7 +222,7 @@ public class OptionsWindow extends JFrame {
         Enumeration<AbstractButton> buttonEnumeration = toolButtonGroup.getElements();
         while (buttonEnumeration.hasMoreElements()) {
             AbstractButton button =  buttonEnumeration.nextElement();
-            if(button.getActionCommand().equals(params.getGTool().name())){
+            if(button.getActionCommand().equals(params.getApplicationType().name())){
                 button.setSelected(true);
             }
         }
@@ -233,7 +232,6 @@ public class OptionsWindow extends JFrame {
         params.setUseSinusPainter(sinusCheckBox.isSelected());
         params.setUseLinePainter(lineCheckBox.isSelected());
         params.setUseBgFlipPainter(bgCheckBox.isSelected());
-        params.setUseSlowPainter(slowCheckBox.isSelected());
 
         params.setFrameRate((Integer)frameRate.getValue());
         params.setFrameShift((Float) frameShift.getValue());
@@ -249,7 +247,7 @@ public class OptionsWindow extends JFrame {
         while (buttonEnumeration.hasMoreElements()) {
             AbstractButton button =  buttonEnumeration.nextElement();
             if(button.isSelected()){
-                params.setGTool(PaintingAreaName.valueOf(button.getActionCommand()));
+                params.setApplicationType(ApplicationType.valueOf(button.getActionCommand()));
             }
         }
     }

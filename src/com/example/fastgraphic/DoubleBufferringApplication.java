@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 
  */
 
-public class DoubleBufferringPaintingArea implements PaintingArea {
+public class DoubleBufferringApplication implements PaintingArea {
 
     private Frame frame;
     private CompositePainter painter;
@@ -42,8 +42,8 @@ public class DoubleBufferringPaintingArea implements PaintingArea {
     private Color foregroundColor;
 
 
-    public DoubleBufferringPaintingArea(String title, int width, int height,
-                                        Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+    public DoubleBufferringApplication(String title, int width, int height,
+                                       Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
         frame = new Frame();
         controller = contrl;
         this.painter = painter;

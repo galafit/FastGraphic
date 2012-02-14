@@ -14,11 +14,10 @@ public class Parameters {
     private float frameShift = 0.5f;
     private AvailableColors bgColor = AvailableColors.BLACK;
     private AvailableColors fgColor = AvailableColors.GREEN;
-    private PaintingAreaName paintingAreaName = PaintingAreaName.SWING;
+    private ApplicationType applicationType = ApplicationType.SWING;
     private boolean useLinePainter;
     private boolean useSinusPainter = true;
     private boolean useBgFlipPainter;
-    private boolean useSlowPainter;
 
     private boolean isSwingDoubleBuff = true;
     private boolean isFullScreen = false;
@@ -35,10 +34,15 @@ public class Parameters {
         if (isUseSinusPainter()) {
             activePainters.add(new SinusPainter(getFrameShift()));
         }
-        if (isUseSlowPainter()) {
-            activePainters.add(new SlowPainter());
-        }
         return activePainters;
+    }
+
+    public ApplicationType getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(ApplicationType applicationType) {
+        this.applicationType = applicationType;
     }
 
     public int getWidth() {
@@ -89,14 +93,6 @@ public class Parameters {
         this.fgColor = fgColor;
     }
 
-    public PaintingAreaName getGTool() {
-        return paintingAreaName;
-    }
-
-    public void setGTool(PaintingAreaName paintingAreaName) {
-        this.paintingAreaName = paintingAreaName;
-    }
-
     public boolean isUseLinePainter() {
         return useLinePainter;
     }
@@ -119,14 +115,6 @@ public class Parameters {
 
     public void setUseBgFlipPainter(boolean useBgFlipPainter) {
         this.useBgFlipPainter = useBgFlipPainter;
-    }
-
-    public boolean isUseSlowPainter() {
-        return useSlowPainter;
-    }
-
-    public void setUseSlowPainter(boolean useSlowPainter) {
-        this.useSlowPainter = useSlowPainter;
     }
 
     public boolean isSwingDoubleBuff() {

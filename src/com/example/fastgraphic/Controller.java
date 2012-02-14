@@ -11,7 +11,7 @@ public class Controller {
     Animator animator;
 
     public void start(Parameters params) {
-        PaintingArea paintingArea = PaintingAreaFactory.getGTool(params, this);
+        PaintingArea paintingArea = ApplicationFactory.getApplication(params, this);
         if (paintingArea!=null) {
             animator = new Animator(paintingArea, params.getFrameRate());
             animator.startAnimation();

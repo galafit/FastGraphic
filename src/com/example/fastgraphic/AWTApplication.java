@@ -13,15 +13,15 @@ import java.awt.event.WindowEvent;
  *
  */
 
-public class AWTPaintingArea implements PaintingArea{
+public class AWTApplication implements PaintingArea{
 
         private Frame frame;
         private CompositePainter painter;
         private PaintingCanvas paintingCanvas;
         private Controller controller;
 
-        public AWTPaintingArea(String title, int width, int height,
-                               Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+        public AWTApplication(String title, int width, int height,
+                              Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
             controller = contrl;
             this.painter = painter;
             frame = new Frame();

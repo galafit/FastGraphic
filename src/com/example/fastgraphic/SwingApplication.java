@@ -14,15 +14,15 @@ import java.awt.event.WindowEvent;
  *
  */
 
-public class SwingPaintingArea implements PaintingArea {
+public class SwingApplication implements PaintingArea {
 
     private JFrame frame;
     private CompositePainter painter;
     private JPanel paintingPanel;
     private Controller controller;
 
-    public SwingPaintingArea(boolean isSwingDoubleBuff, String title, int width, int height,
-                             Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+    public SwingApplication(boolean isSwingDoubleBuff, String title, int width, int height,
+                            Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
         frame = new JFrame();
         if(!isSwingDoubleBuff){
             // turn off Double Buffering

@@ -6,7 +6,7 @@ import java.awt.Graphics;
 /**
  * Paint all selected graphics (sinus, line, etc)  together
  */
-public class CompositePainter {
+public class CompositePainter implements Painter{
 
     private List<Painter> activePainters;
 

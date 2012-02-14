@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  *   http://docs.oracle.com/javase/tutorial/extra/fullscreen/index.html
  */
-public class PageFlippingPaintingArea implements PaintingArea {
+public class PageFlippingApplication implements PaintingArea {
 
 // BufferStrategy can use more then 2 Buffers but 2 is the most common
     public static final int TWO_BUFFERS = 2;
@@ -43,8 +43,8 @@ public class PageFlippingPaintingArea implements PaintingArea {
     ArrayList<String> infoStrings = new ArrayList<String>();
     Frame frame;
 
-    public PageFlippingPaintingArea(boolean isFullScreen, String title, int width, int height,
-                                    Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
+    public PageFlippingApplication(boolean isFullScreen, String title, int width, int height,
+                                   Color bgColor, Color fgColor, CompositePainter painter, Controller contrl) {
         controller = contrl;
         this.painter = painter;
         paintingClip = new Rectangle(0,0,width,height);

@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class JogleExample implements GLEventListener {
+public class JogleApplication implements GLEventListener {
 
 
     private boolean colorFlag;
 
-    public JogleExample(int width, int height, int frameRate) {
+    public JogleApplication(int width, int height, int frameRate) {
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
         GLCanvas canvas = new GLCanvas(caps);
