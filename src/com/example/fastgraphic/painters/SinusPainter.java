@@ -7,6 +7,7 @@ import java.awt.*;
 /**
  *   Draw sinus
  */
+
 public class SinusPainter implements Painter {
 
     float frameShift; //in pixels

@@ -3,7 +3,7 @@ package com.example.fastgraphic.painters;
 import java.awt.*;
 
 /**
- * Paint running Vertical Line
+ * Paint Vertical Line
  */
 
 public class LinePainter implements Painter {
