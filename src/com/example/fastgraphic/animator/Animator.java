@@ -48,7 +48,7 @@ public class Animator {
     public void stopAnimation(){
         isRunning = false;
         int averageFrameRate = (int) (iterationCount *THOUSAND/(System.currentTimeMillis() - startTime));
-        frameRateReport = "FrameRate was set= "+frameRate+"\n\nReal Average FrameRate = "+averageFrameRate;
+        frameRateReport = "FrameRate was set= "+frameRate+"\nReal Average FrameRate = "+averageFrameRate;
 
     }
 

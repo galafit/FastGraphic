@@ -16,7 +16,7 @@ public class OptionsWindow extends JFrame {
 
     private int width = 640;
     private int height = 480;
-    private int frameRate = 60;
+    private int frameRate = 25;
     private float frameShift = 0.5f;
     private AvailableColors bgColor = AvailableColors.BLACK;
     private AvailableColors fgColor = AvailableColors.GREEN;
@@ -66,8 +66,8 @@ public class OptionsWindow extends JFrame {
         frameShiftField.setColumns(2);
         
         // Panel with  Buttons to chose Application
-        JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,15));
-       // toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,20));
+
         HashMap<ApplicationType,Component> buttonHashMap= new HashMap<ApplicationType,Component>();
         for (final ApplicationType appType : ApplicationType.values()) {
             JButton appButton = new JButton(appType.getLabel());
@@ -128,9 +128,9 @@ public class OptionsWindow extends JFrame {
         graphPanel.add(lineCheckBox);
 
 
-        // Panel with Painting Options
-        JPanel paintingOptionsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        paintingOptionsPanel.setBorder(BorderFactory.createTitledBorder("Painting Options"));
+        // Panel with Painting Settings
+        JPanel paintingSettingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        paintingSettingsPanel.setBorder(BorderFactory.createTitledBorder("Painting Settings"));
 
         bgChoice.setSelectedItem(bgColor);
         fgChoice.setSelectedItem(fgColor);
@@ -143,31 +143,23 @@ public class OptionsWindow extends JFrame {
         sizePanel.add(composeLabelField("Width ", widthField), BorderLayout.NORTH);
         sizePanel.add(composeLabelField("Height", heightField), BorderLayout.CENTER);
 
-        paintingOptionsPanel.add(colorPanel);
-        paintingOptionsPanel.add(sizePanel);
+        paintingSettingsPanel.add(colorPanel);
+        paintingSettingsPanel.add(sizePanel);
 
         // Panel that join all Graphics and Painting Options
         JPanel optionsPanel = new JPanel(new BorderLayout());
-        optionsPanel.add(paintingOptionsPanel,BorderLayout.WEST);
+        optionsPanel.add(paintingSettingsPanel,BorderLayout.WEST);
         optionsPanel.add(graphPanel,BorderLayout.CENTER);
         optionsPanel.add(framePanel,BorderLayout.EAST);
+        //Panel surrounding  optionsPanel just to have some spaces around
+        JPanel surroundOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,20));
+        surroundOptionsPanel.add(optionsPanel);
 
-        // Panel with button "Exit"
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(exitButton);
 
         // Root Panel of the OptionsWindow
-        getRootPane().setLayout(new BorderLayout(0, 20));
+        getRootPane().setLayout(new BorderLayout());
         getRootPane().add(toolPanel, BorderLayout.NORTH);
-        getRootPane().add(optionsPanel, BorderLayout.CENTER);
-        getRootPane().add(buttonPanel, BorderLayout.SOUTH);
-
+        getRootPane().add(surroundOptionsPanel, BorderLayout.CENTER);
         pack();
         setVisible(true);
         // put the window at the screen center
