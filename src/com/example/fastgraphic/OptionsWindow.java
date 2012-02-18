@@ -67,12 +67,10 @@ public class OptionsWindow extends JFrame {
         
         // Panel with  Buttons to chose Application
         JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,15));
-        toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        HashMap<ApplicationType,JButton> buttonHashMap= new HashMap<ApplicationType,JButton>();
+       // toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        HashMap<ApplicationType,Component> buttonHashMap= new HashMap<ApplicationType,Component>();
         for (final ApplicationType appType : ApplicationType.values()) {
-            JButton appButton = new JButton();
-            appButton.setLayout(new FlowLayout());
-            appButton.add(new Label(appType.getLabel()));
+            JButton appButton = new JButton(appType.getLabel());
             appButton.setActionCommand(appType.name());
             appButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -81,15 +79,19 @@ public class OptionsWindow extends JFrame {
                 }
             });
             if(appType.equals(ApplicationType.SWING)){
-
-                appButton.add(isSwingDoubleBuffField);
+                JPanel panel = new JPanel(new FlowLayout());
+                panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+                panel.add(appButton);
+                panel.add(isSwingDoubleBuffField);
+                buttonHashMap.put(appType,panel);
+            }else if(appType.equals(ApplicationType.PAGE_FLIPPING)){
+                JPanel panel = new JPanel(new FlowLayout());
+                panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+                panel.add(appButton);
+                panel.add(isFullScreenField);
+                buttonHashMap.put(appType,panel);
             }
-            if(appType.equals(ApplicationType.PAGE_FLIPPING)){
-
-                appButton.add(isFullScreenField);
-            }
-            buttonHashMap.put(appType,appButton);
-
+            else buttonHashMap.put(appType,appButton);
         }
 
         JPanel passiveRenderingPanel = new JPanel(new BorderLayout(0,3));
