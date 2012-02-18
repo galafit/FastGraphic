@@ -147,14 +147,10 @@ public class OptionsWindow extends JFrame {
         groupPanel.add(radioButtonHashMap.get(ApplicationType.ACCELERATED_BUFF));
         activeRenderingPanel.add(groupPanel,BorderLayout.SOUTH);
         activeRenderingPanel.add(radioButtonHashMap.get(ApplicationType.PAGE_FLIPPING),BorderLayout.NORTH);
-        
-        JPanel examplePanel = new JPanel(new BorderLayout(0,3));
-        examplePanel.add(radioButtonHashMap.get(ApplicationType.OPEN_GL),BorderLayout.NORTH);
-        examplePanel.add(radioButtonHashMap.get(ApplicationType.VLCJ),BorderLayout.SOUTH);
+
         
         toolPanel.add(titlePanel("Passive Rendering",passiveRenderingPanel));
         toolPanel.add(titlePanel("Active Rendering",activeRenderingPanel));
-        toolPanel.add(titlePanel("Additional",examplePanel));
 
 
         // Panel describing Frames Changing
