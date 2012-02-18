@@ -2,7 +2,6 @@ package com.example.fastgraphic;
 
 
 import com.example.fastgraphic.animator.Animator;
-import com.example.fastgraphic.animator.PaintingArea;
 import com.example.fastgraphic.painters.*;
 
 import javax.swing.*;
@@ -10,8 +9,6 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 
@@ -24,20 +21,17 @@ public class OptionsWindow extends JFrame {
     private AvailableColors bgColor = AvailableColors.BLACK;
     private AvailableColors fgColor = AvailableColors.GREEN;
     private ApplicationType applicationType = ApplicationType.SWING;
-    private boolean useLinePainter;
-    private boolean useSinusPainter = true;
-    private boolean useBgFlipPainter;
     private Painter painter;
 
     private boolean isSwingDoubleBuff = true;
-    private boolean isFullScreen = false;
+    private boolean isFullScreen = true;
 
     private final JCheckBox sinusCheckBox = new JCheckBox("Sinus");
     JCheckBox lineCheckBox = new JCheckBox("Line");
-    JCheckBox bgCheckBox = new JCheckBox("BG change");
+    JCheckBox bgCheckBox = new JCheckBox("BG change",true);
 
-    JCheckBox isSwingDoubleBuffField = new JCheckBox("Double Buffering");
-    JCheckBox isFullScreenField = new JCheckBox("Full Screen");
+    JCheckBox isSwingDoubleBuffField = new JCheckBox("Double Buffering",true);
+    JCheckBox isFullScreenField = new JCheckBox("Full Screen",true);
 
     JFormattedTextField frameRateField = new JFormattedTextField(frameRate);
     JFormattedTextField frameShiftField = new JFormattedTextField(frameShift);
@@ -47,7 +41,7 @@ public class OptionsWindow extends JFrame {
     JComboBox bgChoice = new JComboBox(AvailableColors.values());
     JComboBox fgChoice = new JComboBox(AvailableColors.values());
 
-    private ButtonGroup toolButtonGroup;
+
 
     private JPanel composeLabelField(String label, Component component) {
         JPanel panel = new JPanel();
@@ -71,82 +65,44 @@ public class OptionsWindow extends JFrame {
         frameRateField.setColumns(2);
         frameShiftField.setColumns(2);
         
-        // Panel with Radio Buttons to chose Tool
+        // Panel with  Buttons to chose Application
         JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,15));
         toolPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        toolButtonGroup = new ButtonGroup();
-        HashMap<ApplicationType,JPanel> radioButtonHashMap= new HashMap<ApplicationType,JPanel>();
+        HashMap<ApplicationType,JButton> buttonHashMap= new HashMap<ApplicationType,JButton>();
         for (final ApplicationType appType : ApplicationType.values()) {
-            JRadioButton radio = new JRadioButton(appType.getLabel());
-            if(appType.equals(applicationType)){
-                radio.setSelected(true);
-            }
-            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,0));
-            buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-            buttonPanel.add(radio);
-            radio.setActionCommand(appType.name());
-            radio.addActionListener(new ActionListener() {
+            JButton appButton = new JButton();
+            appButton.setLayout(new FlowLayout());
+            appButton.add(new Label(appType.getLabel()));
+            appButton.setActionCommand(appType.name());
+            appButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
-                    applicationType=appType;
+                    applicationType = appType;
+                    startApplication();
                 }
             });
-// in Panel of SWING radio button we add the checkBox "isSwingDoubleBuffField" to permit to chose whether the SWING Application
-// will work with Double Buffering "On" or "Off".
-// The ActionListeners control that this checkbox will be enabled only when SWING mode is chosen
-//
-// in Panel of PAGE_FLIPPING radio button we add the checkBox "isFullScreenField" to permit to chose whether the PageFlipping Application
-// will work with en Full Screen or Window mode.
-// The ActionListeners control that this checkbox will be enabled only when PAGE_FLIPPING mode is chosen
             if(appType.equals(ApplicationType.SWING)){
-                buttonPanel.add(isSwingDoubleBuffField);
-                radio.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        isSwingDoubleBuffField.setSelected(true);
-                       isSwingDoubleBuffField.setEnabled(true);
 
-                        isFullScreenField.setSelected(false);
-                        isFullScreenField.setEnabled(false);
-                    }
-                });
+                appButton.add(isSwingDoubleBuffField);
             }
             if(appType.equals(ApplicationType.PAGE_FLIPPING)){
-                buttonPanel.add(isFullScreenField);
-                radio.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        isFullScreenField.setSelected(true);
-                        isFullScreenField.setEnabled(true);
 
-                        isSwingDoubleBuffField.setSelected(false);
-                        isSwingDoubleBuffField.setEnabled(false);
-                    }
-                });
+                appButton.add(isFullScreenField);
             }
-            else{
-                radio.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        isFullScreenField.setSelected(false);
-                        isFullScreenField.setEnabled(false);
-                        isSwingDoubleBuffField.setSelected(false);
-                        isSwingDoubleBuffField.setEnabled(false);
-                    }
-                });
-            }
+            buttonHashMap.put(appType,appButton);
 
-            toolButtonGroup.add(radio);
-            radioButtonHashMap.put(appType,buttonPanel);
         }
 
         JPanel passiveRenderingPanel = new JPanel(new BorderLayout(0,3));
-        passiveRenderingPanel.add(radioButtonHashMap.get(ApplicationType.AWT),BorderLayout.SOUTH);
-        passiveRenderingPanel.add(radioButtonHashMap.get(ApplicationType.SWING),BorderLayout.NORTH);
+        passiveRenderingPanel.add(buttonHashMap.get(ApplicationType.AWT),BorderLayout.SOUTH);
+        passiveRenderingPanel.add(buttonHashMap.get(ApplicationType.SWING),BorderLayout.NORTH);
 
         JPanel activeRenderingPanel = new JPanel(new BorderLayout(0,3));
         JPanel groupPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,0,0));
-        groupPanel.add(radioButtonHashMap.get(ApplicationType.DIRECT));
-        groupPanel.add(radioButtonHashMap.get(ApplicationType.DOUBLE_BUFF));
-        groupPanel.add(radioButtonHashMap.get(ApplicationType.ACCELERATED_BUFF));
+        groupPanel.add(buttonHashMap.get(ApplicationType.DIRECT));
+        groupPanel.add(buttonHashMap.get(ApplicationType.DOUBLE_BUFF));
+        groupPanel.add(buttonHashMap.get(ApplicationType.ACCELERATED_BUFF));
         activeRenderingPanel.add(groupPanel,BorderLayout.SOUTH);
-        activeRenderingPanel.add(radioButtonHashMap.get(ApplicationType.PAGE_FLIPPING),BorderLayout.NORTH);
+        activeRenderingPanel.add(buttonHashMap.get(ApplicationType.PAGE_FLIPPING), BorderLayout.NORTH);
 
         
         toolPanel.add(titlePanel("Passive Rendering",passiveRenderingPanel));
@@ -194,13 +150,7 @@ public class OptionsWindow extends JFrame {
         optionsPanel.add(graphPanel,BorderLayout.CENTER);
         optionsPanel.add(framePanel,BorderLayout.EAST);
 
-        // Panel with buttons "Start" and "Exit"
-        JButton startButton = new JButton("Start");
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                startApplication();
-            }
-        });
+        // Panel with button "Exit"
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -209,7 +159,6 @@ public class OptionsWindow extends JFrame {
         });
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(exitButton);
-        buttonPanel.add(startButton);
 
         // Root Panel of the OptionsWindow
         getRootPane().setLayout(new BorderLayout(0, 20));
@@ -225,7 +174,6 @@ public class OptionsWindow extends JFrame {
 
   
     private void startApplication(){
-
         controlsToParams();
         if (applicationType == ApplicationType.AWT) {
             AWTApplication application = new AWTApplication(painter,width,height,bgColor.getColor(),fgColor.getColor());
@@ -274,8 +222,6 @@ public class OptionsWindow extends JFrame {
     
 
     public void controlsToParams() {
-  
-
         frameRate = (Integer)frameRateField.getValue();
         frameShift = (Float) frameShiftField.getValue();
         width = (Integer) widthField.getValue();
@@ -284,12 +230,8 @@ public class OptionsWindow extends JFrame {
         fgColor = (AvailableColors)fgChoice.getSelectedItem();
    
         painter = createCompoundPainter();
-        if(isFullScreenField.isSelected()){
-            isFullScreen = true;
-        }
-        if(isSwingDoubleBuffField.isSelected()){
-            isSwingDoubleBuff = true;
-        }
+         isFullScreen = isFullScreenField.isSelected();
+         isSwingDoubleBuff = isSwingDoubleBuffField.isSelected();
     }
 
 

@@ -45,6 +45,9 @@ public class PageFlippingApplication implements PaintingArea {
         this.painter = painter;
         paintingClip = new Rectangle(0,0,width,height);
         frame = new Frame();
+        frame.setSize(new Dimension(width,height));
+        frame.setBackground(bgColor);
+        frame.setForeground(fgColor);
         // turn off paint events dispatched from the operating system since we are doing active rendering
         frame.setIgnoreRepaint(true);
         // Full-screen exclusive applications should not be resizable,
@@ -53,8 +56,6 @@ public class PageFlippingApplication implements PaintingArea {
         frame.setResizable(false);
         // Most full-screen exclusive applications are better suited to use undecorated windows.
         frame.setUndecorated(true);
-        frame.setBackground(bgColor);
-        frame.setForeground(fgColor);
         // Add Kay Listener to exit from the Full Screen Mode on pressing any button
         frame.addKeyListener(new KeyAdapter() {
             @Override
