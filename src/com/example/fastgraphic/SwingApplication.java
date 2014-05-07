@@ -2,8 +2,8 @@ package com.example.fastgraphic;
 
 import com.example.fastgraphic.painters.Painter;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Standard Passive Rendering using SWING components
