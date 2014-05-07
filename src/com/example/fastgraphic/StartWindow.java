@@ -229,7 +229,7 @@ public class StartWindow extends JFrame {
         return isSwingDoubleBuffField.isSelected();
     }
 
-    public Painter createCompoundPainter() {
+    public com.example.fastgraphic.painters.Painter createCompoundPainter() {
         CompoundPainter compoundPainter = new CompoundPainter();
         if (bgCheckBox.isSelected()) {
             compoundPainter.addPainter(new BGFlipPainter());
