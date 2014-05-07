@@ -3,7 +3,7 @@ package com.example.fastgraphic.painters;
 import java.awt.*;
 
 /**
- * Paint Vertical Line
+ * Draw "running vertical line". Every time we call this method Line is shifted "shift" pixels to the left
  */
 
 public class LinePainter implements Painter {

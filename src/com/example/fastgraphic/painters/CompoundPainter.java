@@ -14,6 +14,10 @@ import java.awt.Graphics;
 public class CompoundPainter implements Painter{
 
     private List<Painter> activePainters;
+    private long frameCounter;
+    private long firstFrameTime;
+    private long lastFrameTime;
+
 
     public CompoundPainter(){
         activePainters = new ArrayList<Painter>();
@@ -29,10 +33,18 @@ public class CompoundPainter implements Painter{
     }
 
     public void paint(Graphics g){
+        if(firstFrameTime == 0){
+            firstFrameTime = System.currentTimeMillis();
+        }        
         for (Painter activePainter : activePainters) {
              activePainter.paint(g);
         }
-
+        frameCounter++;
+        lastFrameTime = System.currentTimeMillis();
     }
-
+    
+    public String getFrameReport(){
+        float averageFrameRate = (float)frameCounter *1000/(lastFrameTime - firstFrameTime);
+        return  "Real Average FrameRate = "+ String.format("%.2f",averageFrameRate);
+    }
 }

@@ -1,13 +1,11 @@
 package com.example.fastgraphic;
 
 /**
- *  enum for available graphic tools
+ *  enum for available graphics applications
  */
 public enum ApplicationType {
     AWT("AWT"),
     SWING("SWING"),
-    OPEN_GL("OpenGL"),
-    VLCJ("Player (VLCJ)"),
     DIRECT("Direct"),
     DOUBLE_BUFF("Double Buffering"),
     ACCELERATED_BUFF("Accelerated Buffering"),

@@ -1,63 +1,42 @@
 package com.example.fastgraphic;
 
-import com.example.fastgraphic.animator.Animator;
-import com.example.fastgraphic.animator.PaintingArea;
-import com.example.fastgraphic.painters.CompoundPainter;
 import com.example.fastgraphic.painters.Painter;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /**
- * Active rendering which implements simple Double Buffering with OffScreen back buffer stored in the system memory.
+ * Active Rendering in this case implements simple Double Buffering with OffScreen back buffer stored in the system memory.
  *
- * Instead of drawing directly to the screen Double buffering involves first drawing to an offscreen image,
+ * Instead of drawing directly to the screen, Double buffering involves first drawing to an offscreen image,
  * and then coping that image to the screen.
  *
  */
 
-public class DoubleBufferringApplication implements PaintingArea {
+public class DoubleBufferringApplication extends AbstractGraphicsApplication {
 
-    private Canvas paintingCanvas;
-    private Rectangle paintingClip; //Painting Clip for Graphics object should be set manually for Active Rendering
-    private Painter painter;  // implements all painting routine
-    private Animator animator; // that will invoke repaintFrame() method in loop
+    private Canvas paintingCanvas = new Canvas();
+    private Rectangle paintingClip; //Painting Clip for Graphics private Painter painter;  // implements the painting routine
     private Image offScreenImage; // back  buffer for Double Buffering
 
-    public DoubleBufferringApplication(Painter painter, int width, int height,Color bgColor, Color fgColor){
-        this.painter = painter;
+    public DoubleBufferringApplication(int frameRate, Painter painter, int width, int height,Color bgColor, Color fgColor){
+        super(painter);
         paintingClip = new Rectangle(0,0,width,height);
-        final Frame frame = new Frame();  // Application Main Frame
-        frame.setTitle(ApplicationType.DOUBLE_BUFF.getLabel());
-        // add Window Listener to the frame which will stop animation and dispose the frame on closing
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                animator.stopAnimation();
-                frame.dispose();
-                //create a Window with information about real average FrameRate
-                JOptionPane.showMessageDialog(frame, animator.getFrameRateReport());
-            }
-        });
-        paintingCanvas = new Canvas();
-        paintingCanvas.setPreferredSize(new Dimension(width, height));
-        paintingCanvas.setBackground(bgColor);
-        paintingCanvas.setForeground(fgColor);
-        frame.add(paintingCanvas);
-        frame.pack();
-        frame.setVisible(true);
-        // put the window at the screen center
-        frame.setLocationRelativeTo(null);
+        Frame mainFrame = new Frame();
+        mainFrame.setTitle(ApplicationType.DOUBLE_BUFF.getLabel());
+        setDefaultCloseOperation(mainFrame);
+        setSizeAndColors(paintingCanvas, width, height, bgColor, fgColor);
+        mainFrame.add(paintingCanvas);
+        mainFrame.pack();
+        // place the window to the screen center
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
 
         // create Off-Screen Image Buffer
         offScreenImage = createBufferedImage();
+        startAnimation(frameRate);
     }
 
-    public void setAnimator(Animator animator){
-        this.animator = animator;
-    }
+
 
     public void repaintFrame() {
         // get Off-Screen Graphics
@@ -76,8 +55,8 @@ public class DoubleBufferringApplication implements PaintingArea {
         screenG.dispose();
 
         // The call to Toolkit.sync( ) after drawImage( ) ensures that the display is promptly updated.
-        // This is required for Linux, which doesn't automatically flush its display buffer. Without the sync( ) call,
-        // the animation may be only partially updated, creating a " tearing " effect.
+        // This is required for Linux, which does not automatically flush its display buffer. Without the sync( ) call,
+        // the animation may be only partially updated, creating a "tearing" effect.
         // "Killer Game Programming in Java" By Andrew Davison
         Toolkit.getDefaultToolkit().sync();
 
@@ -87,7 +66,7 @@ public class DoubleBufferringApplication implements PaintingArea {
      * For the OffScreen back buffer we need to create an image as close as possible to the Graphics Configuration
      * in terms of its format, with a data layout and color model compatible with the graphics configuration it is drawing to.
      * We can do it by using method createImage(width,height) of any Component
-     * However, in order to create an image in this way, the component  must be displayable (or the return value may be null)
+     * However, in order to create an image in this way, the component  must be displayable (otherwise the return value might be null)
      * The most efficient way to create an image is through the Graphics Configuration of the graphics device
      * where the program is running:
      * <pre>

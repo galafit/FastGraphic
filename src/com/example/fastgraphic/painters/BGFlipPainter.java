@@ -5,17 +5,17 @@ import com.example.fastgraphic.painters.Painter;
 import java.awt.*;
 
 /**
- *   Change BG Color for each frame
+ * Change background color RED-BLUE-RED-BLUE... every time we call paint-method
  */
+
 public class BGFlipPainter implements Painter {
 
     private boolean colorFlag;
     private Color firstColor = Color.RED;
     private Color secondColor = Color.BLUE;
-    private Color initialColor;
 
     public void paint(Graphics g) {
-        initialColor = g.getColor();
+        Color initialColor = g.getColor();
         changeColor(g);
         int width = g.getClipBounds().width;
         int height = g.getClipBounds().height;

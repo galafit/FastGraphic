@@ -1,70 +1,52 @@
 package com.example.fastgraphic;
 
-import com.example.fastgraphic.animator.Animator;
-import com.example.fastgraphic.animator.PaintingArea;
 import com.example.fastgraphic.painters.Painter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 /**
- * Standard Passive rendering using SWING components
+ * Standard Passive Rendering using SWING components
  */
 
-public class SwingApplication implements PaintingArea {
+public class SwingApplication extends AbstractGraphicsApplication{
 
-    private JFrame frame; // Application Main Frame
-    private JPanel paintingPanel;
-    private Painter painter;  // implements all painting routine
-    private Animator animator; // that will invoke repaintFrame() method in loop
+    private JPanel paintingPanel = new PaintingPanel();
 
-    public SwingApplication(boolean isSwingDoubleBuff, Painter painter, int width, int height, Color bgColor, Color fgColor) {
-        this.painter = painter;
-        frame = new JFrame();
+    public SwingApplication(int frameRate, boolean isSwingDoubleBuff, Painter painter, int width, int height, Color bgColor, Color fgColor) {
+        super(painter);
+        JFrame mainFrame = new JFrame();
+        setDefaultCloseOperation(mainFrame);
         if(!isSwingDoubleBuff){
             // turn off Double Buffering
-            frame.getRootPane().setDoubleBuffered(false);
-            //just for the case
-            RepaintManager.currentManager(frame).setDoubleBufferingEnabled(false);
+            mainFrame.getRootPane().setDoubleBuffered(false);
+            // for reliability
+            RepaintManager.currentManager(mainFrame).setDoubleBufferingEnabled(false);
         }
+        else{
+            // restore de default settings with double buffering enabled
+            RepaintManager.currentManager(mainFrame).setDoubleBufferingEnabled(true);
+        }
+        mainFrame.setTitle(ApplicationType.SWING.getLabel());
+        setSizeAndColors(paintingPanel, width, height, bgColor, fgColor);
 
-        frame.setTitle(ApplicationType.SWING.getLabel());
-        // add Window Listener to the frame which will stop animation and dispose the frame on closing
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                animator.stopAnimation();
-                frame.dispose();
-                //create a Window with information about real average FrameRate
-                JOptionPane.showMessageDialog(frame, animator.getFrameRateReport());
-            }
-        });
-        paintingPanel = new PaintingPanel();
-        paintingPanel.setPreferredSize(new Dimension(width, height));
-        paintingPanel.setBackground(bgColor);
-        paintingPanel.setForeground(fgColor);
-// Set Opaque "true" suggests that the component itself is responsible for drawing of all its points
-// and don´t need to call paint() methods of underlying components. It could be a significant optimization
+// Set Opaque "true" suggests that the component itself is responsible for drawing all its points
+// and does not need to call paint() methods of underlying components. It could be a significant optimization.
 // So the component may be transparent only when it is really necessary, otherwise Opaque must be set true .
         paintingPanel.setOpaque(true);
-        frame.add(paintingPanel);
-        frame.pack();
-        frame.setVisible(true);
-        // put the window at the screen center
-        frame.setLocationRelativeTo(null);
-    }
-
-    public void setAnimator(Animator animator){
-        this.animator = animator;
+        mainFrame.add(paintingPanel);
+        mainFrame.pack();
+        // place the window to the screen center
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
+        startAnimation(frameRate);
     }
 
     public void repaintFrame() {
         paintingPanel.repaint();
     }
 
- // To implements Passive Rendering we just need to put all our drawing code in an overridden
+ // To implement Passive Rendering we just need to put our drawing code in an overridden
  // paintComponent() method of the JComponent
     class PaintingPanel extends JPanel {
         @Override
@@ -77,7 +59,6 @@ public class SwingApplication implements PaintingArea {
             painter.paint(g);
         }
     }
-
 }
 
 
